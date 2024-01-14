@@ -10,6 +10,7 @@
   --color-default: #b6b5b5;
   --color-primary: #008374;
   --color-secondary: #f85a40;
+  --color-secondary: #b1c8dd;
 }
 
 /* Smooth scroll behavior */
@@ -48,7 +49,7 @@
   margin-bottom: -0.5rem !important;
 }
 
-.btn-get-started {
+.btn-get-started1 {
   background-color: #b6b5b5;
   border-radius: 6px;
   font-family: monospace;

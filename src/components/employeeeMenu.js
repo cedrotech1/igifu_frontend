@@ -11,13 +11,14 @@ const LandingPage = () => {
   const [show, setShow] = useState(false);
 
   // Mapping between menu item names, corresponding icons, and href
-  const iconMap = {
-    Dashboard: { icon: <BsHouseDoor />, href: 'admin_statistics' },
-    Restaurent: { icon: <GiHotMeal />, href: 'admin_restourent' },
-    Users: { icon: <BiUser />, href: 'admin_dash' },
-    'Our Info': { icon: <BiFile />, href: 'admin_view_one_rest' },
-    Settings: { icon: <BiCog />, href: '#settings' },
-  };
+  const iconMap = [
+    { name: 'Dashboard', icon: <BsHouseDoor />, href: 'emplyoyee_statistics' },
+    { name: 'Meal card', icon: <GiHotMeal />, href: 'emplyoyee_meal_card' },
+    { name: 'Meal card 2', icon: <GiHotMeal />, href: 'emplyoyee_meal_cardx' },
+    { name: 'Customers', icon: <BiUser />, href: 'emplyoyee_customers' },
+    { name: 'Our Info', icon: <BiFile />, href: 'emplyoyee_statistics' },
+    { name: 'Settings', icon: <BiCog />, href: '#settings' },
+  ];
 
   return (
     <>
@@ -31,9 +32,10 @@ const LandingPage = () => {
 
       <center>
         <Nav className="flex-column">
-          {Object.keys(iconMap).map((menuItem) => (
-            <Nav.Link key={menuItem} href={iconMap[menuItem].href} className="nav-link">
-              {iconMap[menuItem].icon} {menuItem}
+          {iconMap.map((menuItem, index) => (
+            // Each menu item has its own href attribute
+            <Nav.Link key={index} href={menuItem.href} className="nav-link">
+              {menuItem.icon} {menuItem.name}
             </Nav.Link>
           ))}
         </Nav>

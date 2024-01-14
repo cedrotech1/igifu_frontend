@@ -12,18 +12,18 @@ const LandingPage = () => {
 
   // Mapping between menu item names and corresponding icons
   const iconMap = {
-    Dashboard: <BsHouseDoor />,
-    Restaurent: <GiHotMeal />,
-    Users: <BiUser />,
-    'Our Info': <BiFile />,
-    Settings: <BiCog />,
+    Dashboard: { icon: <BsHouseDoor />, href: 'admin_statistics' },
+    Restaurent: { icon: <GiHotMeal />, href: 'admin_restourent' },
+    Users: { icon: <BiUser />, href: 'admin_dash' },
+    'Our Info': { icon: <BiFile />, href: 'admin_view_one_rest' },
+    Settings: { icon: <BiCog />, href: '#settings' },
   };
   return (
     <>
-          <Nav className="flex-column">
+      <Nav className="flex-column">
           {Object.keys(iconMap).map((menuItem) => (
-            <Nav.Link key={menuItem} href="#" className="nav-link">
-              {iconMap[menuItem]} {menuItem}
+            <Nav.Link key={menuItem} href={iconMap[menuItem].href} className="nav-link">
+              {iconMap[menuItem].icon} {menuItem}
             </Nav.Link>
           ))}
         </Nav>

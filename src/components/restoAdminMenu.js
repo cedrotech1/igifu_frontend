@@ -10,14 +10,15 @@ import { GiHotMeal } from 'react-icons/gi';
 const LandingPage = () => {
   const [show, setShow] = useState(false);
 
-  // Mapping between menu item names, corresponding icons, and href
-  const iconMap = {
-    Dashboard: { icon: <BsHouseDoor />, href: 'admin_statistics' },
-    Restaurent: { icon: <GiHotMeal />, href: 'admin_restourent' },
-    Users: { icon: <BiUser />, href: 'admin_dash' },
-    'Our Info': { icon: <BiFile />, href: 'admin_view_one_rest' },
-    Settings: { icon: <BiCog />, href: '#settings' },
-  };
+  // Mapping between menu item names, corresponding icons, and href     resto_customers
+  const iconMap = [
+    { name: 'Dashboard', icon: <BsHouseDoor />, href: 'resto_statistics' },
+    { name: 'Our card', icon: <GiHotMeal />, href: 'resto_card' },
+    { name: 'Employee', icon: <BiUser />, href: 'resto_dash' },
+    { name: 'Customers', icon: <BiUser />, href: 'resto_customers' },
+    { name: 'Our Info', icon: <BiFile />, href: 'resto_one_card' },
+    { name: 'Settings', icon: <BiCog />, href: '#settings' },
+  ];
 
   return (
     <>
@@ -31,9 +32,10 @@ const LandingPage = () => {
 
       <center>
         <Nav className="flex-column">
-          {Object.keys(iconMap).map((menuItem) => (
-            <Nav.Link key={menuItem} href={iconMap[menuItem].href} className="nav-link">
-              {iconMap[menuItem].icon} {menuItem}
+          {iconMap.map((menuItem, index) => (
+            // Each menu item has its own href attribute
+            <Nav.Link key={index} href={menuItem.href} className="nav-link">
+              {menuItem.icon} {menuItem.name}
             </Nav.Link>
           ))}
         </Nav>
