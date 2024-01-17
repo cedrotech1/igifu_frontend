@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {  Nav } from 'react-bootstrap';
-import {  BiUser, BiCog,BiFile } from 'react-icons/bi';
+import { Nav } from 'react-bootstrap';
+import { BiUser, BiCog, BiFile } from 'react-icons/bi';
 import '../css/main2.css';
 
 import { BsHouseDoor } from 'react-icons/bs';
@@ -21,14 +21,14 @@ const LandingPage = () => {
   ];
   return (
     <>
-         <Nav className="flex-column">
-          {iconMap.map((menuItem, index) => (
-            // Each menu item has its own href attribute
-            <Nav.Link key={index} href={menuItem.href} className="nav-link">
-              {menuItem.icon} {menuItem.name}
-            </Nav.Link>
-          ))}
-        </Nav>
+      <Nav className="flex-column">
+        {iconMap.map((menuItem, index) => (
+          // Each menu item has its own href attribute
+          <Nav.Link key={index} href={menuItem.href} className="nav-link">
+            {menuItem.icon} {menuItem.name}
+          </Nav.Link>
+        ))}
+      </Nav>
     </>
   );
 };

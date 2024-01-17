@@ -17,8 +17,29 @@
 :root {
   scroll-behavior: smooth;
 }
+.dashboard .row{
+  /* background-color: whitesmoke; */
+}
+.dashboard .imagex{
+ height: 3cm;
+}
 
+.dashboard .namex{
+  text-align: 'center';
+   font-family: 'monospace';
+   text-transform: '';
+   font-weight: 'bold'
+ }
+/* style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: '', fontWeight: 'bold' }} */
+/* style={{ textAlign: 'center', fontFamily: 'monospace', marginBottom: '1cm' }} */
 /* landing-page.css */
+
+.dashboard .titlex{
+  margin-bottom: 1cm;
+  font-family: 'monospace';
+  text-align: 'center';
+
+ }
 
 .membery {
   text-align: center;

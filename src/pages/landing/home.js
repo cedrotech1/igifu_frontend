@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import  '../../css/main2.css';
+import '../../css/main2.css';
 import Menu from '../../components/menu';
 import Footer from '../../components/footer';
 
@@ -11,7 +11,7 @@ const LandingPage = () => {
     <>
       <Menu />
 
-   
+
 
       <section id="hero" className="hero">
         <div className="container position-relative">
@@ -23,35 +23,58 @@ const LandingPage = () => {
               <p style={{ marginBottom: '1cm', marginTop: '0cm', fontStyle: 'bold', fontFamily: 'monospace' }}>
                 Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet. Eum quas beatae cumque eum quaerat.
               </p>
-              <div className="d-flex justify-content-center justify-content-lg-start">
+              {/* <div className="d-flex justify-content-center justify-content-lg-start">
                 <a
-                  href="register"
-                  className="btn-get-started"
-                  style={{ backgroundColor: 'skyblue', borderRadius: '6px', fontFamily: 'monospace' }}
+                  href="resto_dash"
+                  className="glightbox btn-watch-video d-flex align-items-center"
+                  style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '4cm', textAlign: 'center', padding: '0cm', marginTop: '0.5cm', textDecoration: 'none' }}
                 >
+                  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+                  Resto Dash
+                </a>
+                <a
+                  href="admin_dash"
+                  className="glightbox btn-watch-video d-flex align-items-center"
+                  style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '4cm', textAlign: 'center', padding: '0.2cm', marginTop: '0.5cm', textDecoration: 'none' }}
+                >
+                  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+                  system admin
+                </a>
+
+                <a
+                  href="emplyoyee_customers"
+                  className="glightbox btn-watch-video d-flex align-items-center"
+                  style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '4cm', textAlign: 'center', padding: '0.2cm', marginTop: '0.5cm', textDecoration: 'none' }}
+                >
+                  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+                  employee
+                </a>
+              </div> */}
+
+<div className="d-flex justify-content-center justify-content-lg-start">
+                <a href="register" className="btn-get-started" style={{ backgroundColor: 'skyblue', borderRadius: '6px', fontFamily: 'monospace' }}>
                   Get Started
                 </a>
                 <a
                   href="restoAdmin"
                   className="glightbox btn-watch-video d-flex align-items-center"
-                  style={{
-                    backgroundColor: 'whitesmoke',
-                    borderRadius: '6px',
-                    width: '4.5cm',
-                    textAlign: 'center',
-                    fontFamily: 'monospace',
-                  }}
+                  style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '4.5cm', textAlign: 'center', fontFamily: 'monospace' }}
                 >
-                  &nbsp; &nbsp; restaurent
+                  &nbsp;  &nbsp;
+                  restaurent
                 </a>
               </div>
+
+
+              
             </div>
             <div className="col-lg-6 order-1 order-lg-2">
-              <img src="assets/img/hero-img.svg" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100" />
+              <img src="assets/img/Cooking-bro.svg" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100" />
             </div>
           </div>
         </div>
       </section>
+      <br />
 
       <Footer />
 
