@@ -13,70 +13,41 @@ const LandingPage = () => {
 
 
 
-      <section id="hero" className="hero">
+      <section id="hero" className="hero herohome" style={{ height: '' }}>
         <div className="container position-relative">
           <div className="row gy-5" data-aos="fade-in">
-            <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-              <h2 style={{ fontSize: '45px', marginBottom: '1cm', marginTop: '-1cm', fontFamily: 'monospace' }}>
+            <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start" style={{ marginTop: '-2cm', fontFamily: 'monospace' }}>
+              <h2 className='welcame' style={{ fontSize: '45px', marginBottom: '0cm', marginTop: '', fontFamily: 'monospace' }}>
                 Welcome to meal card
               </h2>
-              <p style={{ marginBottom: '1cm', marginTop: '0cm', fontStyle: 'bold', fontFamily: 'monospace' }}>
-                Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet. Eum quas beatae cumque eum quaerat.
+              <p style={{ marginBottom: '1cm', marginTop: '0cm', fontStyle: 'bold', fontFamily: 'monospace',textAlign:'justfy' }}>
+              Welcome to our innovative dining experience! Securely enjoy meals with your personalized card. Our automated system ensures convenience and effortless reporting. Bon appétit!
               </p>
-              {/* <div className="d-flex justify-content-center justify-content-lg-start">
-                <a
-                  href="resto_dash"
-                  className="glightbox btn-watch-video d-flex align-items-center"
-                  style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '4cm', textAlign: 'center', padding: '0cm', marginTop: '0.5cm', textDecoration: 'none' }}
-                >
-                  &nbsp;  &nbsp;  &nbsp;  &nbsp;
-                  Resto Dash
-                </a>
-                <a
-                  href="admin_dash"
-                  className="glightbox btn-watch-video d-flex align-items-center"
-                  style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '4cm', textAlign: 'center', padding: '0.2cm', marginTop: '0.5cm', textDecoration: 'none' }}
-                >
-                  &nbsp;  &nbsp;  &nbsp;  &nbsp;
-                  system admin
-                </a>
 
-                <a
-                  href="emplyoyee_customers"
-                  className="glightbox btn-watch-video d-flex align-items-center"
-                  style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '4cm', textAlign: 'center', padding: '0.2cm', marginTop: '0.5cm', textDecoration: 'none' }}
-                >
-                  &nbsp;  &nbsp;  &nbsp;  &nbsp;
-                  employee
-                </a>
-              </div> */}
 
-<div className="d-flex justify-content-center justify-content-lg-start">
-                <a href="register" className="btn-get-started" style={{ backgroundColor: 'skyblue', borderRadius: '6px', fontFamily: 'monospace' }}>
+              <div className="d-flex justify-content-center justify-content-lg-start" style={{ marginTop: '1cm' }}>
+                <a href="register" className="btn-get-started" style={{ backgroundColor: '', borderRadius: '6px', fontFamily: 'monospace' }}>
                   Get Started
                 </a>
-                <a
-                  href="restoAdmin"
-                  className="glightbox btn-watch-video d-flex align-items-center"
-                  style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '4.5cm', textAlign: 'center', fontFamily: 'monospace' }}
-                >
-                  &nbsp;  &nbsp;
-                  restaurent
+
+                <a href="restoAdmin" className="restaurent" style={{}}>
+                  Restaurent
                 </a>
               </div>
 
 
-              
+
             </div>
-            <div className="col-lg-6 order-1 order-lg-2">
-              <img src="assets/img/Cooking-bro.svg" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100" />
+            <div className="col-lg-6 order-1 order-lg-2" style={{ marginTop: '-1cm', fontFamily: 'monospace',color:'white' }}>
+              <img src="assets/img/breakfast from bed-pana.svg" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100" />
             </div>
           </div>
         </div>
       </section>
       <br />
-
-      <Footer />
+      <div  style={{ marginTop: '-0cm', fontFamily: 'monospace' }}>
+        <Footer />
+      </div>
 
       <a href="#" className="scroll-top d-flex align-items-center justify-content-center">
         <i className="bi bi-arrow-up-short"></i>
