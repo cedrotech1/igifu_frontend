@@ -1,43 +1,106 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Offcanvas, Button } from 'react-bootstrap';
-import '../../css/main2.css';
+import { Modal, Offcanvas, Button } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import { BiEnvelope, BiPhone, BiMap } from 'react-icons/bi';
+import { useNavigate, useParams } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+
+import Statistics from "../../components/statistics-component";
 import Menu from "../../components/employeeeMenu";
 import Menu2 from "../../components/employeeMenu2";
-import { BiEnvelope, BiPhone, BiMap } from 'react-icons/bi'; // Importing icons from the 'react-icons' library
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [checkboxes, setCheckboxes] = useState({
-    For1: false,
-    For2: false,
-    For3: false,
-  });
-
-  // Function to handle checkbox changes
-  const handleCheckboxChange = (task) => {
-    setCheckboxes((prevCheckboxes) => ({
-      For1: task === 'For1' ? !prevCheckboxes.For1 : false,
-      For2: task === 'For2' ? !prevCheckboxes.For2 : false,
-      For3: task === 'For3' ? !prevCheckboxes.For3 : false,
-    }));
+  const [showModal, setShowModal] = useState(false);
+  const handleToggleModal = () => {
+    setShowModal(!showModal);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your form submission logic here
-    console.log('Form submitted:', checkboxes);
-  };
+  const [Cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem('token');
+  const [EmployeesAdmin, setEmployeesAdmin] = useState([]);
 
-  const imageSources = Array.from({ length: 15 }, (_, index) => `assets/img/check.png`);
-
-
-  const imageSources2 = Array.from({ length: 15 }, (_, index) => `assets/img/not1.png`);
+  const { id } = useParams();
+  const [resid, setResId] = useState('');
 
 
+  useEffect(() => {
+    const fetchEmployeesAdmin = async () => {
+      try {
+
+        const response = await fetch(`http://localhost:5000/api/v1/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          setEmployeesAdmin([data.user]);
+        } else {
+          console.error('Failed to fetch EmployeesAdmin:', data.message);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching EmployeesAdmin:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchEmployeesAdmin();
+  }, []);
+
+
+
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      const res = parsedUser.restaurents;
+      setResId(res);
+      console.log(resid)
+    } else {
+      console.error('User information not found in local storage');
+    }
+  }, [resid]);
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/v1/card/mycard/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        if (data.success) {
+          const allCards = data.Cardses;
+          setCards(allCards);
+          console.log(allCards)
+        } else {
+          console.error('Failed to fetch Cards:', data.message);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching Cards:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchCards();
+  }, [token]);
+  const handleView = (id) => { navigate(`../emplyoyee_meal_cardx/${id}`); }
   return (
-    <body className='mybody'>
-      <div className="dashboardx">
+    <body className='mybody' >
+      <div className="dashboard" style={{ backgroundColor: 'whitesmoke' }}>
         <div className="container-fluid">
           <div className="row">
             {/* Sidebar (visible on medium devices and larger) */}
@@ -48,14 +111,11 @@ const Dashboard = () => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <div className="membery">
-                    <center> <img src="assets/img/profile.png" className="img-fluid imagex" alt="" style={{ height: '3cm' }} /></center>
-                    <h5 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: '', fontWeight: 'bold' }}>H.Cedrick</h5>
-
-                    <p style={{ textAlign: 'center', fontFamily: 'monospace', marginBottom: '1cm' }}>
+                    <center> <img src="assets/img/profile.png" className="img-fluid imagex" alt="" /></center>
+                    <h5 className='names'>H.Cedrick</h5>
+                    <p className='titlex'>
                       Sed autem laudantium dolores.
                     </p>
-
-
                   </div>
                   <center>
                     <Menu2 />
@@ -70,230 +130,72 @@ const Dashboard = () => {
                 </Offcanvas.Body>
               </Offcanvas>
             </div>
-
-            {/* Main Content */}
             <main className="col-md-12 ms-sm-auto col-lg-12 px-md-4 allcontent">
               <div className="row">
-                {/* Sidebar Trigger Button (visible on small devices) */}
-
-
-                {/* Sidebar (visible on medium devices and larger when Offcanvas is closed) */}
                 {!show && (
                   <div className="col-md-2 d-none d-md-block d-md-blockx">
-                    {/* Your menu items go here */}
                     <Menu />
                   </div>
                 )}
-
-                {/* Your dashboard content goes here */}
-
                 <div className={`col-md-10 ${show ? 'content-shift' : ''}`}>
 
                   <section id="team" className="team">
-                    <div className="container" data-aos="fade-up">
+                    <div className="container" data-aos="fade-up" style={{ marginLeft: '-0.2cm' }}>
                       <div className="row">
-
-                        {/* menu bars */}
                         <div className="col-12 d-md-none">
                           <Button variant="" onClick={() => setShow(!show)}>
                             ☰
                           </Button>
                         </div>
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-                              <h1 style={{ fontSize: '40px' }}>23</h1>
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0.1cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0.1cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-
-
-
-
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-
-
-
-
                       </div>
                     </div>
                   </section>
-
-
-                  <section id="hero" className="hero">
+                  <section id="team" className="team" style={{ backgroundColor: 'whitesmoke' }}>
                     <div className="container position-relative">
                       <div className="row gy-5" data-aos="fade-in">
-                        <div className="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start" style={{ backgroundColor: '', padding: '0.7cm', marginTop: '-0.5cm' }}>
+                        <div className="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start" style={{ marginTop: '0cm', fontFamily: 'monospace' }}>
+                          <div className="row gy-4">
+                            {EmployeesAdmin.map((Employee) => (
+                              <div key={Employee.id} className="col-xl-12 col-md-12" data-aos="fade-up" data-aos-delay={100 * Employee.id} style={{ padding: '' }}>
+                                <div className="member col-xl-12">
+                                  <img src='/assets/img/images (3).jpeg' className="img-fluid" alt="" style={{ height: 'auto', padding: '0px', width: '100%', borderRadius: '7px' }} />
+                                  <h4 style={{ textAlign: 'center' }}>{Employee.firstname} &nbsp;{Employee.lastname}</h4>
 
-                          <div className="col-xl-11 col-md-12 d-flex" data-aos="fade-up" data-aos-delay="200" style={{ backgroundColor: 'whitesmoke', padding: '0.5cm', borderRadius: '10px' }} >
-                            <div className="member">
-                              <img src="assets/img/pic.png" className="img-fluid" alt="" style={{ borderRadius: '10px' }} />
-                              <h4 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: 'uppercase', marginTop: '0.3cm' }}>CEDRICK Hakuzimana</h4>
-
-                              <p style={{ marginBottom: '0.5cm', marginTop: '0cm', fontStyle: 'bold', fontFamily: 'monospace', marginTop: '0.3cm', textAlign: 'center' }}>
-
-                                <i className="bi bi-envelope flex-shrink-0" style={{ backgroundColor: '' }}><BiEnvelope className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} /></i>
-                                &nbsp; <span>  cedrickhakuzimana@gmail.com</span><br />
-                                <i className="bi bi-envelope flex-shrink-0" style={{ backgroundColor: '' }}><BiMap className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} /></i>
-
-
-                                &nbsp; <span>huye innovation hub !
-                                </span><br />
-                                <i className="bi bi-envelope flex-shrink-0" style={{ backgroundColor: '' }}><BiPhone className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} /></i>
-
-                                &nbsp; <span> 07853435654</span>
-
-
-
-
-                              </p>
-
-                            </div>
+                                  <p style={{ textAlign: 'justify', fontFamily: 'cursive', textAlign: 'center' }}>
+                                    {Employee.status}
+                                  </p>
+                                  <p style={{ textAlign: 'center', fontStyle: 'italic', fontPalette: '13px', backgroundColor: 'whitesmoke', padding: '0.4cm', marginTop: '20px', borderRadius: '6px' }}>
+                                    <BiMap className="" style={{ color: 'black' }} />&nbsp;&nbsp;{Employee.address} <br />
+                                    <BiEnvelope className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} />&nbsp;&nbsp;{Employee.email} <br />
+                                    <BiPhone />&nbsp;&nbsp;{Employee.phone}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
                           </div>
                         </div>
-                        <div className="col-lg-7 order-1 order-lg-2">
-                          <div className="col-xl-12" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                            <div className="row member">
-                              <div className=" col-xl-12  col-md-12" style={{ margin: '0cm' }}>
-                                <div className="">
-                                  {imageSources.map((src, index) => (
-                                    <img key={index} src={src} className="img-fluid" alt="" style={{ height: '1.5cm', marginRight: '5px', marginBottom: '5px' }} />
-                                  ))}
-
-                                  {imageSources2.map((src, index) => (
-                                    <img key={index} src={src} className="img-fluid" alt="" style={{ height: '1.2cm', marginRight: '5px', marginBottom: '5px' }} />
-                                  ))}
-                                  <div className=" col-xl-6  col-md-6" style={{ margin: '0cm' }}></div>
-
-                                  <div className=" col-xl-6  col-md-6" style={{ margin: '0cm' }}></div>
-                                  <form onSubmit={handleSubmit} className='col-xl-6'>
-                                    <div className="d-flex justify-content-start" style={{ marginTop: '1cm', backgroundColor: '' }}>
-                                      <div className="form-check form-check-inline">
-                                        <input
-                                          type="checkbox"
-                                          className="form-check-input"
-                                          id="For1"
-                                          checked={checkboxes.For1}
-                                          onChange={() => handleCheckboxChange('For1')}
-                                        />
-                                        <label className="form-check-label" htmlFor="For1">For 1</label>
-                                      </div>
-                                      <div className="form-check form-check-inline">
-                                        <input
-                                          type="checkbox"
-                                          className="form-check-input"
-                                          id="For2"
-                                          checked={checkboxes.For2}
-                                          onChange={() => handleCheckboxChange('For2')}
-                                        />
-                                        <label className="form-check-label" htmlFor="For2">For 2</label>
-                                      </div>
-                                      <div className="form-check form-check-inline">
-                                        <input
-                                          type="checkbox"
-                                          className="form-check-input"
-                                          id="For3"
-                                          checked={checkboxes.For3}
-                                          onChange={() => handleCheckboxChange('For3')}
-                                        />
-                                        <label className="form-check-label" htmlFor="For3">For 3</label>
-                                      </div>
+                        <div className="col-lg-7 order-1 order-lg-2" style={{ marginTop: '-2cm', fontFamily: 'monospace', color: 'white' }}>
+                          {Cards.map((card) => (
+                            <div onClick={() => handleView(card.id)} className="row member" style={{ marginTop: '1.7cm' }}>
+                              <div className="col-xl-6 col-md-6 d-flex">
+                                <img src='/assets/img/card.png' className="img-fluid" alt="" />
+                              </div>
+                              <div className="col-xl-6 col-md-6" style={{ paddingTop: '1cm' }}>
+                                <h4 style={{ color: 'black', textAlign: 'justify' }}>MEAL CARD</h4>
+                                <p style={{ marginLeft: '-1cm', textAlign: 'justify' }}>
+                                  {card.cardUser && (
+                                    <div>
+                                      <strong>User:</strong> {card.cardUser.firstname} {card.cardUser.lastname} <br />
+                                      <strong>Restaurant:</strong> {card.categories.resto.name}<br />
+                                      <strong>Card category:</strong> {card.categories.name}<br />
+                                      <strong>Duration:</strong> {card.times} times remain<br />
+                                      <strong>Date:</strong> {card.createdAt}
                                     </div>
-                                    <div className="mt-3">
-                                      <button type="submit" className="btn" style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '6cm', textAlign: 'center', padding: '', marginTop: '0.5cm', textDecoration: 'none' }}>Submit</button>
-                                    </div>
-                                  </form>
-                                </div>
+                                  )}
+                                </p>
                               </div>
                             </div>
-                          </div>
-
-                          <div className="col-xl-12" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '3cm', backgroundColor: '' }}>
-                            <div className="row member">
-                              <div className=" col-xl-12  col-md-6" style={{ margin: '0cm' }}>
-                                <div className="col-xl-12" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                                  <div className="row member">
-                                    <div className=" col-xl-12  col-md-12" style={{ margin: '0cm' }}>
-                                      <div className="d-flex justify-content-center justify-content-lg-start">
-
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="d-flex justify-content-center justify-content-lg-start">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-
-
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -304,7 +206,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
+      <ToastContainer />
     </body>
   );
 };

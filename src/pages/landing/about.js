@@ -22,7 +22,7 @@ const LandingPage = () => {
                 Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet. Eum quas beatae cumque eum quaerat.
               </p>
               <div className="d-flex justify-content-center justify-content-lg-start">
-                <a href="register" className="btn-get-started" style={{ backgroundColor: 'skyblue', borderRadius: '6px', fontFamily: 'monospace' }}>
+                <a href="register" className="btn-get-started" style={{ backgroundColor: '#faead1', borderRadius: '6px', fontFamily: 'monospace' }}>
                   Get Started
                 </a>
                 <a
@@ -36,7 +36,7 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="col-lg-6 order-1 order-lg-2">
-              <img src="assets/img/Cooking-bro.svg" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100" />
+              <img src="assets/img/breakfast from bed-pana.svg" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100" />
             </div>
           </div>
         </div>
@@ -45,12 +45,12 @@ const LandingPage = () => {
       <section id="team" className="team">
         <div className="container" data-aos="fade-up">
           <div className="row gy-4">
-          <div className="col-xl-12 col-md-12 d-flex" data-aos="fade-up" data-aos-delay="100" style={{ alignItems: 'center', justifyContent: 'center'}}>
-      <h2 style={{ textAlign: 'center' }}>Our Services</h2>
-    </div>
+            <div className="col-xl-12 col-md-12 d-flex" data-aos="fade-up" data-aos-delay="100" style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <h2 style={{ textAlign: 'center' }}>Our Services</h2>
+            </div>
             <div className="col-xl-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
               <div className="member">
-                <img src="assets/img/Service 24_7-bro.svg" className="img-fluid" alt="" />
+                <img src="assets/img/Eating together-amico.svg" className="img-fluid" alt="" />
                 <h4 style={{ textAlign: 'justify' }}>OUR FIRST  SEVICE</h4>
 
                 <p style={{ textAlign: 'justify' }}>
@@ -70,7 +70,7 @@ const LandingPage = () => {
             </div>
             <div className="col-xl-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
               <div className="member">
-                <img src="assets/img/Waiters-bro.svg" className="img-fluid" alt="" />
+                <img src="assets/img/Waiters-amico.svg" className="img-fluid" alt="" />
                 <h4 style={{ textAlign: 'justify', textTransform: 'uppercase' }}>OUR THIRD SERVICE</h4>
 
                 <p style={{ textAlign: 'justify' }}>
@@ -91,13 +91,13 @@ const LandingPage = () => {
             <div className="" data-aos="fade-up" data-aos-delay="100">
               <div className="row memberx">
                 <div className=" col-xl-6 col-md-6 d-flex">
-                  <img src="assets/img/pic.png" className="img-fluid" alt="" style={{height:'auto'}}/>
+                  <img src="assets/img/Writer's block-rafiki.svg" className="img-fluid" alt="" style={{ height: 'auto' }} />
 
                 </div>
                 <div className=" col-xl-6 col-md-6" style={{ padding: '0.5cm' }}>
-                  <h3 style={{ textAlign: 'justify' }}>cedrickhakuzimana 
+                  <h3 style={{ textAlign: 'justify' }}>how our system work?
 
-                  
+
                   </h3>
 
 
@@ -140,18 +140,16 @@ const LandingPage = () => {
       <section id="team" className="team" style={{ backgroundColor: 'rgb(254, 254, 254)' }}>
         <div className="container" data-aos="fade-up">
           <div className="row gy-4" style={{ paddingLeft: '1cm' }}>
-          <div className="col-xl-12 col-md-12 d-flex" data-aos="fade-up" data-aos-delay="100" style={{ alignItems: 'center', justifyContent: 'center'}}>
-      <h4 style={{ textAlign: 'center' }}>HOW OUR SYSTEM WORK</h4>
-    </div>
-            <div className="col-xl-1  d-flex" data-aos="fade-up" data-aos-delay="100">
-
+            <div className="col-xl-12 col-md-12 d-flex" data-aos="fade-up" data-aos-delay="100" style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <h4 style={{ textAlign: 'center' ,color: '#f38a7a', }}>HOW OUR SYSTEM WORK</h4>
             </div>
+          
 
             <div className="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
               <div className="memberx" style={{ backgroundColor: 'rgb(254, 254, 254)' }}>
-              <i className="bi bi-envelope flex-shrink-0"><BiUserPlus className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black',height:'2cm',width:'1cm' }} /></i>
+                <i className="bi bi-envelope flex-shrink-0"><BiUserPlus className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: '#f38a7a', height: '2cm', width: '1cm' }} /></i>
 
-                <h4 style={{ textAlign: 'center' }}>Create Account </h4>
+                <h4 style={{ textAlign: 'center',color:'' }}>Create Account </h4>
 
                 <p style={{ textAlign: 'center' }}>
                   Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet.
@@ -161,7 +159,19 @@ const LandingPage = () => {
 
             <div className="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
               <div className="memberx" style={{ backgroundColor: 'rgb(254, 254, 254)' }}>
-              <i className="bi bi-envelope flex-shrink-0"><BiLogIn className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black',height:'2cm',width:'1cm' }} /></i>
+                <i className="bi bi-envelope flex-shrink-0"><BiLogIn className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: '#f38a7a',  height: '2cm', width: '1cm' }} /></i>
+
+                <h4 style={{ textAlign: 'center' }}>Get authontication </h4>
+
+                <p style={{ textAlign: 'center' }}>
+                  Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet.
+                </p>
+              </div>
+            </div>
+
+            <div className="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+              <div className="memberx" style={{ backgroundColor: 'rgb(254, 254, 254)' }}>
+                <i className="bi bi-envelope flex-shrink-0"><BiLogIn className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: '#f38a7a',  height: '2cm', width: '1cm' }} /></i>
 
                 <h4 style={{ textAlign: 'center' }}>Get authontication </h4>
 
@@ -172,9 +182,10 @@ const LandingPage = () => {
             </div>
 
 
+
             <div className="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
               <div className="memberx" style={{ backgroundColor: 'rgb(254, 254, 254)' }}>
-              <i className="bi bi-envelope flex-shrink-0"><BiSmile className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black',height:'2cm',width:'1cm' }} /></i>
+                <i className="bi bi-envelope flex-shrink-0"><BiSmile className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{color: '#f38a7a',  height: '2cm', width: '1cm' }} /></i>
 
                 <h4 style={{ textAlign: 'center' }}>enjoy app </h4>
 

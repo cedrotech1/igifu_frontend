@@ -40,7 +40,7 @@ const LandingPage = () => {
 
         <div className="d-flex justify-content-center">
           {/* Logout link */}
-          <a href="register" className="btn-get-started1">
+          <a href="login" className="btn-get-started1">
             logout
           </a>
         </div>

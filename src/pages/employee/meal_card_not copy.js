@@ -1,160 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modal, Offcanvas, Button } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
-import { BiEnvelope, BiPhone, BiMap } from 'react-icons/bi';
-import { useNavigate, useParams } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
-
-import Statistics from "../../components/statistics-component";
+import { Offcanvas, Button } from 'react-bootstrap';
+import '../../css/main2.css';
 import Menu from "../../components/employeeeMenu";
 import Menu2 from "../../components/employeeMenu2";
+import { BiEnvelope, BiPhone, BiMap } from 'react-icons/bi'; // Importing icons from the 'react-icons' library
 
 const Dashboard = () => {
-  const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const handleToggleModal = () => {
-    setShowModal(!showModal);
-  };
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const [Cards, setCards] = useState([]);
-  const [Error, setError] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem('token');
-  const [EmployeesAdmin, setEmployeesAdmin] = useState([]);
-
-  const { id } = useParams();
-  const [resid, setResId] = useState('');
-  const [use, setuse] = useState({
-    one: 0,
-    two: 0,
-    three: 0,
+  const [checkboxes, setCheckboxes] = useState({
+    For1: false,
+    For2: false,
+    For3: false,
   });
 
-
-  // `http://localhost:5000/api/v1/categories/one/${id}`,
-
-  useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/api/v1/card/one/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-
-        if (data.success) {
-          // Get all cards
-          const allCards = data.data;
-          setCards(allCards);
-          console.log(allCards)
-
-        } else {
-          console.error('Failed to fetch Cards:', data.message);
-        }
-
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching Cards:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchCards();
-  }, [token]);
-
-
-  let x;
-  if (Cards.duration === "1 month") {
-    x = 60 - Cards.times;
-  }
-  if (Cards.duration === "2 month") {
-    x = 120 - Cards.times;
-  }
-  console.log(Cards.duration)
-  console.log(x)
-
-  // console.log(use.one)
-  let a = Math.max(use.one, use.two, use.three);
-
-  console.log(a);
-
-  const imageSources = Array.from({ length: Cards.times }, (_, index) => `/assets/img/check.png`);
-  const imageSources2 = Array.from({ length: x }, (_, index) => `/assets/img/not1.png`);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let x = '0';
-    if (use) {
-      // setFormData({ use: 1 })
-
-
-
-      try {
-        console.log(use)
-
-        const response = await fetch(`http://localhost:5000/api/v1/card/use/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            use: Number(a)
-
-          }),
-        });
-
-        if (response.ok) {
-          const res = await response.json();
-          toast.success(res.message);
-          await new Promise(resolve => setTimeout(resolve, 3000)); // Adjust the delay time as needed
-
-          window.location.reload();
-        } else {
-          const errorData = await response.json();
-          setError(errorData.message);
-          toast.error(errorData.message);
-        }
-      } catch (error) {
-        console.error('Error creating card', error);
-        setError('Failed to create card. Please try again later.');
-      }
-    } else {
-      toast.error('chose duration plz !!');
-      console.log("error")
-    }
-  };
-
-
-  const handleChange = (e) => {
-    setuse(e.target.value);
-
-    console.log(use)
-    //   setError(null);
-  };
-  const [formData, setFormData] = useState({
-    userid: 1,
-    category: 1,
-    use: 0,
-    status: 'active',
-  });
-
-  // State to manage the checkbox values
-
-
-  // Event handler to update the checkbox state on checkbox change
-  const handleCheckboxChange = (checkboxName) => {
-    setuse((prevValues) => ({
-      one: checkboxName === '1' ? 1 : 0,
-      two: checkboxName === '2' ? 2 : 0,
-      three: checkboxName === '3' ? 3 : 0,
+  // Function to handle checkbox changes
+  const handleCheckboxChange = (task) => {
+    setCheckboxes((prevCheckboxes) => ({
+      For1: task === 'For1' ? !prevCheckboxes.For1 : false,
+      For2: task === 'For2' ? !prevCheckboxes.For2 : false,
+      For3: task === 'For3' ? !prevCheckboxes.For3 : false,
     }));
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add your form submission logic here
+    console.log('Form submitted:', checkboxes);
+  };
+
+  const imageSources = Array.from({ length: 15 }, (_, index) => `assets/img/check.png`);
+
+
+  const imageSources2 = Array.from({ length: 15 }, (_, index) => `assets/img/not1.png`);
+
+
   return (
     <body className='mybody'>
       <div className="dashboardx">
@@ -168,7 +48,7 @@ const Dashboard = () => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <div className="membery">
-                    <center> <img src="/assets/img/profile.png" className="img-fluid imagex" alt="" style={{ height: '3cm' }} /></center>
+                    <center> <img src="assets/img/profile.png" className="img-fluid imagex" alt="" style={{ height: '3cm' }} /></center>
                     <h5 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: '', fontWeight: 'bold' }}>H.Cedrick</h5>
 
                     <p style={{ textAlign: 'center', fontFamily: 'monospace', marginBottom: '1cm' }}>
@@ -181,7 +61,7 @@ const Dashboard = () => {
                     <Menu2 />
                     <center>
                       <div className="d-flex justify-content-center ">
-                        <a href="login" className="btn-get-started" style={{ backgroundColor: '#b6b5b5', borderRadius: '6px', fontFamily: 'monospace', textDecoration: 'none', padding: '0.2cm', width: '4cm', marginTop: '3cm', color: 'black' }}>
+                        <a href="register" className="btn-get-started" style={{ backgroundColor: '#b6b5b5', borderRadius: '6px', fontFamily: 'monospace', textDecoration: 'none', padding: '0.2cm', width: '4cm', marginTop: '3cm', color: 'black' }}>
                           logout
                         </a>
                       </div>
@@ -270,6 +150,13 @@ const Dashboard = () => {
 
                         </div>
 
+
+
+
+
+
+
+
                         <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
                           <div className="row member">
 
@@ -304,35 +191,30 @@ const Dashboard = () => {
                       <div className="row gy-5" data-aos="fade-in">
                         <div className="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start" style={{ backgroundColor: '', padding: '0.7cm', marginTop: '-0.5cm' }}>
 
-
-                          <div className="col-xl-11 col-md-12 d-flex" data-aos="fade-up" data-aos-delay="200" style={{ backgroundColor: 'whitesmoke', padding: '0.5cm', borderRadius: '10px' }} >
-                            {Cards.cardUser && (<div className="member">
-                              <img src="/assets/img/pic.png" className="img-fluid" alt="" style={{ borderRadius: '10px' }} />
-
-                              <h4 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: 'uppercase', marginTop: '0.3cm' }}>
-                                {Cards.cardUser.firstname} &nbsp;{Cards.cardUser.lastname}
-                              </h4>
-
+                        <div className="col-xl-11 col-md-12 d-flex" data-aos="fade-up" data-aos-delay="200" style={{ backgroundColor: 'whitesmoke', padding: '0.5cm', borderRadius: '10px' }} >
+                            <div className="member">
+                              <img src="assets/img/pic.png" className="img-fluid" alt="" style={{ borderRadius: '10px' }} />
+                              <h4 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: 'uppercase', marginTop: '0.3cm' }}>CEDRICK Hakuzimana</h4>
 
                               <p style={{ marginBottom: '0.5cm', marginTop: '0cm', fontStyle: 'bold', fontFamily: 'monospace', marginTop: '0.3cm', textAlign: 'center' }}>
 
                                 <i className="bi bi-envelope flex-shrink-0" style={{ backgroundColor: '' }}><BiEnvelope className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} /></i>
-                                &nbsp; <span>  {Cards.cardUser.email}</span><br />
+                                &nbsp; <span>  cedrickhakuzimana@gmail.com</span><br />
                                 <i className="bi bi-envelope flex-shrink-0" style={{ backgroundColor: '' }}><BiMap className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} /></i>
 
-
+                            
                                 &nbsp; <span>huye innovation hub !
                                 </span><br />
                                 <i className="bi bi-envelope flex-shrink-0" style={{ backgroundColor: '' }}><BiPhone className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} /></i>
 
-                                &nbsp; <span> {Cards.cardUser.phone}</span>
+                                &nbsp; <span> 07853435654</span>
 
 
 
 
                               </p>
 
-                            </div>)}
+                            </div>
                           </div>
                         </div>
                         <div className="col-lg-7 order-1 order-lg-2">
@@ -347,51 +229,59 @@ const Dashboard = () => {
                                   {imageSources2.map((src, index) => (
                                     <img key={index} src={src} className="img-fluid" alt="" style={{ height: '1.2cm', marginRight: '5px', marginBottom: '5px' }} />
                                   ))}
-
-
-                                  <form onSubmit={handleSubmit} className="myform">
-                                    {/* <h4>Meal card</h4> */}
-
-                                    <div className="checkbox-container">
-                                      {/* Checkbox 1 */}
-
-                                      <label>
+                                     
+                                      
+                                  <form onSubmit={handleSubmit} >
+                                    <div className="d-flex justify-content-start" style={{ marginTop: '1cm', backgroundColor: '' }}>
+                                      <div className="form-check form-check-inline">
                                         <input
                                           type="checkbox"
-                                          checked={use.one > 0}
-                                          onChange={() => handleCheckboxChange('1')}
+                                          className="form-check-input"
+                                          id="For1"
+                                          checked={checkboxes.For1}
+                                          onChange={() => handleCheckboxChange('For1')}
                                         />
-                                        For 1
-                                      </label>
-
-                                      {/* Checkbox 2 */}
-                                      <label>
+                                        <label className="form-check-label" htmlFor="For1">For 1</label>
+                                      </div>
+                                      <div className="form-check form-check-inline">
                                         <input
                                           type="checkbox"
-                                          checked={use.two > 0}
-                                          onChange={() => handleCheckboxChange('2')}
+                                          className="form-check-input"
+                                          id="For2"
+                                          checked={checkboxes.For2}
+                                          onChange={() => handleCheckboxChange('For2')}
                                         />
-                                        For 2
-                                      </label>
-
-                                      {/* Checkbox 3 */}
-                                      <label>
+                                        <label className="form-check-label" htmlFor="For2">For 2</label>
+                                      </div>
+                                      <div className="form-check form-check-inline">
                                         <input
                                           type="checkbox"
-                                          checked={use.three > 0}
-                                          onChange={() => handleCheckboxChange('3')}
+                                          className="form-check-input"
+                                          id="For3"
+                                          checked={checkboxes.For3}
+                                          onChange={() => handleCheckboxChange('For3')}
                                         />
-                                        For 3
-                                      </label>
-
-                                      {/* Display the checked checkbox value */}
-                                      {/* <p>Checked checkbox value: {Object.values(use).reduce((acc, val) => acc + val, 0) || 'None'}</p> */}
+                                        <label className="form-check-label" htmlFor="For3">For 3</label>
+                                      </div> <br/>
+                                    
                                     </div>
 
-                                    <div className="text-center">
-                                      <button type="submit" className="form-control" style={{ marginTop: '0.5cm' }}>
-                                        save
-                                      </button>
+                                    
+                                    <div className="mt-3">
+                                      
+                                    <div className="">
+                                        <input
+                                          type="text"
+                                          className="form-control"
+                                          placeholder='PIN'
+                                          style={{border:'0px',backgroundColor:'whitesmoke',width:'6cm'}}
+                                          
+                                          
+                                        
+                                        />
+                                       
+                                      </div>
+                                      <button type="submit" className="btn" style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '6cm', textAlign: 'center', padding: '', marginTop: '0.5cm', textDecoration: 'none' }}>Submit</button>
                                     </div>
                                   </form>
                                 </div>
@@ -426,7 +316,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+
     </body>
   );
 };

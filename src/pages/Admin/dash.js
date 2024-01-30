@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Offcanvas, Button, Nav } from 'react-bootstrap';
 import '../../css/main2.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEdit, faCheck,faTimes } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import Menu from "../../components/adminMenu";
 import Menu2 from "../../components/adminMenuRes";
@@ -18,6 +24,158 @@ const Dashboard = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+
+  const [restaurantsAdmin, setRestaurantsAdmin] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRestaurantsAdmin = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:5000/api/v1/users', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Ensure that 'users' is an array before filtering
+          const usersArray = Array.isArray(data.users) ? data.users : [];
+          const filteredUsers = usersArray.filter(user => user.role === 'restaurentadmin');
+
+          setRestaurantsAdmin(filteredUsers);
+
+          console.log(filteredUsers);
+        } else {
+          console.error('Failed to fetch restaurantsAdmin:', data.message);
+        }
+
+        // Set loading to false after fetching data
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching restaurantsAdmin:', error);
+        // Set loading to false in case of an error
+        setLoading(false);
+      }
+    };
+
+    fetchRestaurantsAdmin();
+  }, []);
+
+
+  const handleView = (userId) => {
+    // Handle view logic
+    console.log(`View user with ID: ${userId}`);
+  };
+
+  const handleModify = (userId) => {
+    // Handle modify logic
+    console.log(`Modify user with ID: ${userId}`);
+  };
+  const handleDeactivate = async (userId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:5000/api/v1/users/deactivate/${userId}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        const res = await response.json();
+        toast.success(res.message);
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        console.error(`Failed to activate user with ID ${userId}:`, errorData.message);
+      }
+    } catch (error) {
+      console.error('Error activating user:', error);
+    }
+  };
+
+  const handleActivate = async (userId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:5000/api/v1/users/activate/${userId}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        const res = await response.json();
+        toast.success(res.message);
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        console.error(`Failed to activate user with ID ${userId}:`, errorData.message);
+      }
+    } catch (error) {
+      console.error('Error activating user:', error);
+    }
+  };
+
+  // ...
+
+const renderActivationButton = (userId, userStatus) => {
+  const buttonStyle = {
+    backgroundColor: 'white',
+    border: '0px',
+  };
+
+  if (userStatus === 'active') {
+    return (
+      <button onClick={() => handleDeactivate(userId)} style={buttonStyle}>
+        <FontAwesomeIcon icon={faTimes} />
+      </button>
+    );
+  } else if (userStatus === 'inactive') {
+    return (
+      <button onClick={() => handleActivate(userId)} style={buttonStyle}>
+        <FontAwesomeIcon icon={faCheck} />
+      </button>
+    );
+  } else {
+    return null;
+  }
+};
+
+// ...
+
+{Array.isArray(restaurantsAdmin) && restaurantsAdmin.length > 0 ? (
+  restaurantsAdmin.map((user, index) => (
+    <tr key={user.id}>
+      <th scope="row">{index + 1}</th>
+      <td>{user.firstname} {user.lastname}</td>
+      <td>{user.email}</td>
+      <td>{user.phone}</td>
+      <td>{user.status}</td>
+      <td>
+        <button onClick={() => handleView(user.id)} style={{ backgroundColor: 'white', border: '0px' }}>
+          <FontAwesomeIcon icon={faEye} />
+        </button>
+        <button onClick={() => handleModify(user.id)} style={{ backgroundColor: 'white', border: '0px' }}>
+          <FontAwesomeIcon icon={faEdit} />
+        </button>
+        {renderActivationButton(user.id, user.status)}
+      </td>
+    </tr>
+  ))
+) : (
+  <tr>
+    <td colSpan="6">No data available</td>
+  </tr>
+)}
+// ...
+
+  
+
 
   return (
     <body className='mybody'>
@@ -167,8 +325,9 @@ const Dashboard = () => {
                   </section>
 
                   {/* Button to open the modal */}
-                  <div style={{ textAlign: 'right' }}>
-                    <Button
+                  <div style={{ textAlign: 'right',marginBottom:'1cm' }}>
+                    <input
+                    placeholder='Filter here...'
                       variant=""
                       onClick={handleToggleModal}
                       style={{
@@ -178,162 +337,74 @@ const Dashboard = () => {
                         textDecoration: 'none',
                         padding: '0.2cm',
                         width: '4cm',
-                        marginTop: '-2cm',
-                        color: 'black',
+                        marginTop: '0cm',
+                        // color: 'black',
                         height: 'auto',
+                        width:'6cm',
+                        border:'0px',
+                      
                       }}
-                    >
-                      Add users
-                    </Button>
+                    />
+                    
+                   
                   </div>
 
                   {/* Modal component */}
-                  <Modal show={showModal} onHide={handleCloseModal}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Add Employees</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <form action="" method="post" role="form" className="myform">
-                        {/* <h4 style={{fontFamily:'Abel',backgroundColor:'',border:'0px',height:'auto',borderTopLeftRadius:'0.5cm',borderTopRightRadius:'0.5cm',color:'black',textAlign:'',padding:''}}>register as customer form</h4> */}
-
-
-                        <div className="row" style={{ paddingTop: '0cm' }}>
-                          <div className="col-md-6 form-group">
-                            <span>First name</span>
-                            <input type="text" name="name" className="form-control" id="name" placeholder="Cedrick" required style={{ marginTop: '0.1cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} />
-                          </div>
-                          <div className="col-md-6 form-group mt-3 mt-md-0">
-                            <span>Last Name</span>
-                            <input type="email" className="form-control" name="email" id="email" placeholder="Hakuzimana" required style={{ marginTop: '0.1cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} />
-                          </div>
-                        </div>
-                        <div className="form-group mt-3">
-                          <span>Email</span>
-
-                          <input style={{ marginTop: '0.3cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} type="text" className="form-control" name="email" id="email" placeholder="cedrick@gmail.com" required />
-                        </div>
-
-                        <div className="form-group mt-3">
-                          <span>Phone</span>
-
-                          <input style={{ marginTop: '0.3cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} type="text" className="form-control" name="email" id="email" placeholder="0784366616" required />
-                        </div>
-
-                        <div className="form-group mt-3">
-                          <span>Password</span>
-
-                          <input style={{ marginTop: '0.3cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} type="text" className="form-control" name="email" id="email" placeholder="*************" required />
-                        </div>
-                        {/* <br/> */}
-
-                        <div className="row" style={{ paddingTop: '0.3cm' }}>
-                          <div className="col-md-6 form-group">
-                            <span>Gender</span>
-                            <input type="text" name="name" className="form-control" id="name" placeholder="male" required style={{ marginTop: '0.3cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} />
-                          </div>
-                          <div className="col-md-6 form-group mt-3 mt-md-0">
-                            <span>Address</span>
-                            <input type="email" className="form-control" name="email" id="email" placeholder="huye/ngoma" required style={{ marginTop: '0.3cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} />
-                          </div>
-                        </div>
-
-
-                        <div className="text-center"><button type="submit" className="form-control" style={{ marginTop: '1.6cm', backgroundColor: '#4c56ad', color: 'white', borderRadius: ' 10px' }}>create account</button></div>
-                      </form>
-                    </Modal.Body>
-
-                  </Modal>
+                
 
                   <section id="team" className="team" style={{ marginTop: '-2cm' }}>
-                    <div className="container" data-aos="fade-up">
-                      <div className="row">
-                        <div className="" data-aos="fade-up" data-aos-delay="100">
-                          <div className="row member">
+  <div className="container" data-aos="fade-up">
+    <div className="row">
+      <div className="" data-aos="fade-up" data-aos-delay="100">
+        <div className="row member">
 
-                            <div className=" col-xl-12 col-md-12" style={{ padding: '0.4cm' }}>
-                              {/* <h3 style={{textAlign:'justify'}}>LISTE OF USERS</h3>
-                  table-borderless
-                    */}
+          <div className="col-xl-12 col-md-12" style={{ padding: '0.4cm' }}>
+            <h4 style={{ textAlign: 'justify',paddingBottom:'0.5cm',color:'gray' }}>LIST OF OUR RESTAURENT ADMINS</h4>
 
-
-                              <p style={{ textAlign: 'justify', marginTop: '0cm' }}>
-                                <table class="table table-hover ">
-                                  <thead >
-                                    <tr style={{ backgroundColor: 'red', marginTop: '0cm' }}>
-                                      <th scope="col">#</th>
-                                      <th scope="col">First</th>
-                                      <th scope="col">Last</th>
-                                      <th scope="col">Handle</th>
-                                      <th scope="col">Last</th>
-                                      <th scope="col">Handle</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <th scope="row">1</th>
-                                      <td>Mark</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">2</th>
-                                      <td>Jacob</td>
-                                      <td>Thornton</td>
-                                      <td>@fat</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">3</th>
-                                      <td colspan="2">Larry the Bird</td>
-                                      <td>@twitter</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-
-                                    <tr>
-                                      <th scope="row">3</th>
-                                      <td colspan="2">Larry the Bird</td>
-                                      <td>@twitter</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-
-                                    <tr>
-                                      <th scope="row">3</th>
-                                      <td colspan="2">Larry the Bird</td>
-                                      <td>@twitter</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-                                  </tbody>
-                                </table>  </p>
-
-
-
-                            </div>
-                          </div>
-
-
-                        </div>
-
-
-
-                      </div>
-                    </div>
-                  </section>
-
-
-
-
-
-
-
-
-
-
+            {Array.isArray(restaurantsAdmin) && restaurantsAdmin.length > 0 ? (
+              <table className="table table-hover">
+                <thead>
+                  <tr style={{ backgroundColor: 'red', marginTop: '0cm' }}>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">modify</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {restaurantsAdmin.map((user, index) => (
+                    <tr key={user.id}>
+                      <th scope="row">{index + 1}</th>
+                      <td>{user.firstname} {user.lastname}</td>
+                      <td>{user.email}</td>
+                      <td>{user.phone}</td>
+                      <td>{user.status}</td>
+                      <td>
+                        <button onClick={() => handleView(user.id)} style={{ backgroundColor: 'white', border: '0px' }}>
+                          <FontAwesomeIcon icon={faEye} />
+                        </button>
+                        <button onClick={() => handleModify(user.id)} style={{ backgroundColor: 'white', border: '0px' }}>
+                          <FontAwesomeIcon icon={faEdit} />
+                        </button>
+                        {renderActivationButton(user.id, user.status)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="card" style={{ padding: '20px', textAlign: 'center' }}>
+                <p>No data available</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
                 </div>
               </div>
@@ -341,7 +412,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
+      <ToastContainer />
     </body>
   );
 };

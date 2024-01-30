@@ -14,6 +14,7 @@ import List from "./pages/customer/reslist";
 import Details from "./pages/customer/RestoDetails";
 import OneRes from "./pages/customer/oneres";
 import Confirm from "./pages/customer/confirms";
+import Mycards from "./pages/customer/mycards";
 
 // Importing components from the Admin pages
 import Dash from "./pages/Admin/dash";
@@ -22,8 +23,8 @@ import Restos from "./pages/Admin/restos";
 import OneResto from "./pages/Admin/oneResto";
 
 // Importing components from the Admin resto pages
-import Dasha from "./pages/AdminResto/dash";
-import Card from "./pages/AdminResto/card";
+import Dasha from "./pages/AdminResto/homePage";
+import Card from "./pages/AdminResto/Card-category";
 import Statisticsa from "./pages/AdminResto/statistics";
 import Onecard from "./pages/AdminResto/oneResto";
 import Rcustomer from "./pages/AdminResto/customers";
@@ -53,12 +54,14 @@ function App() {
         <Route path="/login" element={<Login />} exact={true} />
         <Route path="/register" element={<CustomerRegister />} exact={true} />
         <Route path="/restoAdmin" element={<RestRegister />} exact={true} />
+        
 
         {/* Customer Pages */}
         <Route path="/list" element={<List />} exact={true} />
-        <Route path="/details" element={<Details />} exact={true} />
-        <Route path="/one" element={<OneRes />} exact={true} />
+        <Route path="/details/:id" element={<Details />} exact={true} />
+        <Route path="/one/:id" element={<OneRes />} exact={true} />
         <Route path="/confirm" element={<Confirm />} exact={true} />
+        <Route path="/mycards" element={<Mycards />} exact={true} />
 
         {/* Admin Pages */}
         <Route path="/admin_dash" element={<Dash />} exact={true} />
@@ -72,11 +75,11 @@ function App() {
         <Route path="/emplyoyee_customers_request" element={<View />} exact={true} />
         <Route path="/emplyoyee_confirms" element={<Confirmx />} exact={true} />
         <Route path="/emplyoyee_statistics" element={<EmployeeStatistic />} exact={true} />
-        <Route path="/emplyoyee_meal_card" element={<Has />} exact={true} />
-        <Route path="/emplyoyee_meal_cardx" element={<Not />} exact={true} />
+        <Route path="/emplyoyee_meal_card/:id" element={<Has />} exact={true} />
+        <Route path="/emplyoyee_meal_cardx/:id" element={<Not />} exact={true} />
         {/* Admin Resto Pages */}
         <Route path="/resto_dash" element={<Dasha />} exact={true} />
-        <Route path="/resto_card" element={<Card />} exact={true} />
+        <Route path="/resto_card/" element={<Card />} exact={true} />
         <Route path="/resto_statistics" element={<Statisticsa />} exact={true} />
         <Route path="/resto_one_card" element={<Onecard />} exact={true} />
         <Route path="/resto_customers" element={<Rcustomer />} exact={true} />

@@ -13,7 +13,7 @@ const LandingPage = () => {
   // Mapping between menu item names, corresponding icons, and href
   const iconMap = [
     { name: 'Dashboard', icon: <BsHouseDoor />, href: 'emplyoyee_statistics' },
-    { name: 'Meal card', icon: <GiHotMeal />, href: 'emplyoyee_meal_card' },
+    { name: 'Meal card', icon: <GiHotMeal />, href: 'emplyoyee_meal_card/:id' },
     { name: 'Meal card 2', icon: <GiHotMeal />, href: 'emplyoyee_meal_cardx' },
     { name: 'Customers', icon: <BiUser />, href: 'emplyoyee_customers' },
     { name: 'Our Info', icon: <BiFile />, href: 'emplyoyee_statistics' },
@@ -24,7 +24,7 @@ const LandingPage = () => {
     <>
       <div className="membery">
         <center>
-          <img src="assets/img/profile.png" className="img-fluid imagex" alt="" />
+          <img src="/assets/img/profile.png" className="img-fluid imagex" alt="" />
         </center>
         <h5>H.Cedrick</h5>
         <p>system admin</p>

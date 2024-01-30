@@ -29,11 +29,12 @@ const LandingPage = () => {
               <Nav className="flex-column">
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="list">restaurent</Nav.Link>
+                <Nav.Link href="mycards">My cards</Nav.Link>
                 <Nav.Link href="login">logout</Nav.Link>
               </Nav>
               <div className="d-flex justify-content-center">
                 <a
-                  href="register"
+                  href="login"
                   className="btn-get-started"
                   style={{
                     backgroundColor: '#b6b5b5',
@@ -61,7 +62,7 @@ const LandingPage = () => {
       <header id="header" className="header d-flex align-items-center">
         <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
           <a href="/" className="logo d-flex align-items-center">
-            <h1 style={{ color: 'black', fontStyle: 'bold', fontFamily: 'monospace' }}>Meal_card<span>.</span></h1>
+          <img src="/assets/img/LG.png" className="img-fluid mylogo" alt="" data-aos="zoom-out" data-aos-delay="100" />
           </a>
           <nav id="navbar" className="navbar">
             <ul>
@@ -71,22 +72,10 @@ const LandingPage = () => {
               <li>
                 <a href="list" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>restaurent</a>
               </li>
-              {/* <li>
-                <a href="one" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>one</a>
-              </li>
               <li>
-                <a href="details" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>card</a>
-              </li> */}
-
-              {/* <li>
-                <a href="contact" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>Contact</a>
+                <a href="mycards" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>MyCards</a>
               </li>
-              <li>
-                <a href="about" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>About</a>
-              </li>
-              <li>
-                <a href="confirm" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>Confirm</a> */}
-              {/* </li> */}
+            
               <li>
                 <a href="login" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>logout</a>
               </li>
