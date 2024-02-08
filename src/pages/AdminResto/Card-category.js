@@ -7,37 +7,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEdit, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
-import Menu from "../../components/restoAdminMenu";
-
+import { useNavigate, useParams } from 'react-router-dom';
+import Menu from "../../components/MenuDeskTop";
 import Statistics from "../../components/statistics-component";
-import Menu2 from "../../components/restoAdminMenu2";
+import Menu2 from "../../components/MenuMobile";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
-
   const [showModal, setShowModal] = useState(false);
-
-  const handleToggleModal = () => {
-    setShowModal(!showModal);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-
+  const handleToggleModal = () => { setShowModal(!showModal);  };
+  const handleCloseModal = () => {setShowModal(false);  };
   const [Cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem('token');
-  // const [value, setFilterValue] = useState('');
-
   useEffect(() => {
     const fetchCards = async () => {
       try {
-      
-        const response = await fetch('http://localhost:5000/api/v1/categories/', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/categories/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -69,9 +56,8 @@ const Dashboard = () => {
 
 
   const handleView = (CardId) => {
-    // Handle view logic
-    console.log(`View Card with ID: ${CardId}`);
-  };
+    navigate(`../resto_cate_view/${CardId}`);
+     };
 
   const handleModify = (CardId) => {
     // Handle modify logic
@@ -80,7 +66,7 @@ const Dashboard = () => {
   const handleDeactivate = async (CardId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/v1/categories/diactivate/${CardId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/categories/diactivate/${CardId}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -105,7 +91,7 @@ const Dashboard = () => {
   const handleActivate = async (CardId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/v1/categories/activate/${CardId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/categories/activate/${CardId}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -189,6 +175,7 @@ const Dashboard = () => {
     name: '',
     price: '',
     description: '',
+ 
 
   });
 
@@ -198,7 +185,7 @@ const Dashboard = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/v1/categories/add', {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/categories/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -239,8 +226,6 @@ const Dashboard = () => {
   // handlefilter
 
   const [value, setFilterValue] = useState('');
-  // const [filteredCards, setFilteredCards] = useState([]);
-  
   const handleFilter = (e) => {
     setFilterValue(e.target.value);
     setError(null);
@@ -249,7 +234,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/v1/categories/', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/categories/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -271,22 +256,18 @@ const Dashboard = () => {
         } else {
           console.error('Failed to fetch Cards:', data.message);
         }
-  
-        // Set loading to false after fetching data
         setLoading(false);
       } catch (error) {
         console.error('Error fetching Cards:', error);
-        // Set loading to false in case of an error
         setLoading(false);
       }
     };
   
     fetchCards();
   }, [value]);
-  
-  
-  // Use 'filteredCards' in your component where needed
-  
+
+
+
 
   return (
     <body className='mybody' >
@@ -300,26 +281,9 @@ const Dashboard = () => {
                   <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <div className="membery">
-                    <center> <img src="assets/img/profile.png" className="img-fluid imagex" alt="" /></center>
-                    <h5 className='names'>H.Cedrick</h5>
-
-                    <p className='titlex'>
-                      Sed autem laudantium dolores.
-                    </p>
-
-
-                  </div>
-                  <center>
+                
                     <Menu2 />
-                    <center>
-                      <div className="d-flex justify-content-center ">
-                        <a href="register" className="btn-get-started" style={{ backgroundColor: '#b6b5b5', borderRadius: '6px', fontFamily: 'monospace', textDecoration: 'none', padding: '0.2cm', width: '4cm', marginTop: '3cm', color: 'black' }}>
-                          logout
-                        </a>
-                      </div>
-                    </center>
-                  </center>
+               
                 </Offcanvas.Body>
               </Offcanvas>
             </div>
@@ -327,19 +291,11 @@ const Dashboard = () => {
             {/* Main Content */}
             <main className="col-md-12 ms-sm-auto col-lg-12 px-md-4 allcontent">
               <div className="row">
-                {/* Sidebar Trigger Button (visible on small devices) */}
-
-
-                {/* Sidebar (visible on medium devices and larger when Offcanvas is closed) */}
                 {!show && (
                   <div className="col-md-2 d-none d-md-block d-md-blockx">
-                    {/* Your menu items go here */}
                     <Menu />
                   </div>
                 )}
-
-                {/* Your dashboard content goes here */}
-
                 <div className={`col-md-10 ${show ? 'content-shift' : ''}`}>
 
                 <section id="team" className="team">
@@ -383,6 +339,7 @@ const Dashboard = () => {
                           height: 'auto',
                           width: '6cm',
                           border: '0px',
+                          outline: 'none',
 
                         }}
                       />
@@ -439,23 +396,11 @@ const Dashboard = () => {
                           <span>description</span>
                           <textarea type="text" className="form-control" name="description" id="email" style={{backgroundColor:'whitesmoke'}} placeholder="............." onChange={handleChange} />
                         </div>
-                     
 
-                        {/* <div className="form-group mt-3">
-                          <span>password</span>
-                          <input type="text" className="form-control" name="password" id="password" placeholder="*********" onChange={handleChange} />
-                        </div>
-                        <div className="form-group mt-3">
-                          <span>confirm password</span>
-                          <input type="text" className="form-control" name="confirmPassword" id="confirmPassword" placeholder="*********" onChange={handleChange} />
-                        </div> */}
-
-
-                       
                      
                         <div className="text-center">
                           <button type="submit" className="form-control">
-                            Create Account
+                            Save
                           </button>
                         </div>
                         {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
@@ -471,11 +416,15 @@ const Dashboard = () => {
         Cards.map((category, index) => (
           <div onClick={() => handleView(category.id)} key={index} className="col-xl-3 col-md-4" data-aos="fade-up" data-aos-delay={100 * (index + 1)}>
             <div className="member">
-              <img src='/assets/img/images (4).jpeg' className="img-fluid" alt="" style={{ height: 'auto', width: '100%', borderRadius: '7px' }} />
-              <h4 style={{ textAlign: 'center', fontFamily: 'cursive', textTransform: 'uppercase' }}>{category.name}</h4>
-              <p style={{ textAlign: 'center', fontFamily: 'cursive', marginLeft: '0cm' }}>{category.description}</p>
+            {category.image!==null && category.image!=='null' ? (
+                                        <img src={category.image} className="img-fluid" alt="" style={{ borderRadius: '10px', marginBottom: '0.5cm',width:'9cm'  }}  />                                  
+                                        ) : (
+                                        <img src='/assets/img/images (4).jpeg' className="img-fluid" alt="Default Image" style={{ borderRadius: '10px', marginBottom: '0.5cm',width:'100%' }} />
+                                        )}
+              <h4 style={{ textAlign: 'center', fontFamily: 'cursive', textTransform: 'uppercase',marginBottom:'0.5cm' }}>{category.name}</h4>
+              {/* <p style={{ textAlign: 'center', fontFamily: 'cursive', marginLeft: '0cm' }}>{category.description}</p> */}
               <p style={{ fontFamily: 'cursive', marginTop: '-0.5cm', textAlign: 'center', fontSize: '20px' }}>
-                Price: {category.price}
+                Price: {category.price} &nbsp;Rwf
               </p>
               <p style={{ fontFamily: 'cursive', marginTop: '-0.6cm', textAlign: 'center', fontSize: '16px' }}>
                 <i> status: {category.status}</i>

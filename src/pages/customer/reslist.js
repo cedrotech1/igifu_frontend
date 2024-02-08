@@ -14,7 +14,7 @@ const LandingPage = () => {
     const fetchRestaurants = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/v1/restaurent/', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/restaurent/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -48,7 +48,7 @@ const LandingPage = () => {
   return (
     <>
       <Menu />
-      <section id="hero" className="hero">
+      <section id="hero" className="hero"  style={{marginTop:'1cm'}}>
         <div className="container position-relative">
           <div className="row gy-5" data-aos="fade-in">
             <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
@@ -68,6 +68,8 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {Array.isArray(restaurants) && restaurants.length > 0 ? (
+
 <section id="team" className="team">
   <div className="container" data-aos="fade-up">
     <div className="row gy-4">
@@ -77,15 +79,19 @@ const LandingPage = () => {
         restaurants.map((restaurant) => (
           <div onClick={() => handleView(restaurant.id)} key={restaurant.id} className="col-xl-4 col-md-6 " data-aos="fade-up" data-aos-delay={100 * restaurant.id} style={{ padding: '' }}>
             <div className="member col-xl-12">
-              <img src='assets/img/images (3).jpeg' className="img-fluid" alt="" style={{ height: 'auto', padding: '0px', width: '100%', borderRadius: '7px' }} />
+            {restaurant.image!==null ? (
+              <img src={restaurant.image} className="img-fluid" alt="" style={{ borderRadius: '10px', marginBottom: '0.5cm',width:'9CM' }} />
+            ) : (
+              <img src='/assets/img/rest.jpg' className="img-fluid" alt="Default Image" style={{ borderRadius: '10px', marginBottom: '0.5cm', width: '100%' }}/>
+            )}
               <h4 style={{ textAlign: 'justify' }}>{restaurant.name}</h4>
 
               <p style={{ textAlign: 'justify' }}>
                 {restaurant.description}
                 <p style={{ textAlign: 'center', fontStyle: 'italic', fontPalette: '13px', backgroundColor: '#faead1', padding: '0.4cm', marginTop: '20px', borderRadius: '6px' }}>
                   <BiMap className="" style={{ color: 'black' }} />&nbsp;&nbsp;{restaurant.address} <br />
-                  <BiEnvelope className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} />&nbsp;&nbsp;obina@gmail.com <br />
-                  <BiPhone />&nbsp;&nbsp;07854635367
+                  <BiEnvelope className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} />&nbsp;&nbsp;{restaurant.email} <br />
+                  <BiPhone />&nbsp;&nbsp;{restaurant.phone}
                 </p>
               </p>
             </div>
@@ -95,7 +101,32 @@ const LandingPage = () => {
     </div>
   </div>
 </section>
+    ) : (
+      <section id="hero" className="hero" style={{ height: '90vh' }}>
+      <div className="container position-relative">
+        <div className="row gy-5" data-aos="fade-in">
+          <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start" style={{ marginTop: '4cm', fontFamily: 'monospace' }}>
+            <h2 className='welcame' style={{ fontSize: '45px', marginBottom: '0cm', marginTop: '-5cm', fontFamily: 'monospace' }}>
+              404
+            </h2>
+            <p style={{ marginBottom: '1cm', marginTop: '0cm', fontStyle: 'bold', fontFamily: 'monospace',textAlign:'justfy' }}>
+          there is no registered restaurent yet ! <br/>
+           sorry !!
+            </p>
 
+
+        
+
+
+
+          </div>
+          <div className="col-lg-6 order-1 order-lg-2" style={{ marginTop: 'cm', fontFamily: 'monospace',color:'white' }}>
+            <img src="/assets/img/Oops! 404 Error with a broken robot-amico.svg" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100" />
+          </div>
+        </div>
+      </div>
+    </section>
+                  )}
 
 
       <Footer />

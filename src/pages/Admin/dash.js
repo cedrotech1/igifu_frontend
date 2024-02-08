@@ -7,10 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEdit, faCheck,faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Statistics from "../../components/statistics-component";
 
-
-import Menu from "../../components/adminMenu";
-import Menu2 from "../../components/adminMenuRes";
+import Menu from "../../components/MenuDeskTop";
+import Menu2 from "../../components/MenuMobile";
 
 const Dashboard = () => {
   const [show, setShow] = useState(false);
@@ -33,7 +33,7 @@ const Dashboard = () => {
     const fetchRestaurantsAdmin = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/v1/users', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/users`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -78,7 +78,7 @@ const Dashboard = () => {
   const handleDeactivate = async (userId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/v1/users/deactivate/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/users/deactivate/${userId}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -101,7 +101,7 @@ const Dashboard = () => {
   const handleActivate = async (userId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/v1/users/activate/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/users/activate/${userId}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -145,9 +145,6 @@ const renderActivationButton = (userId, userStatus) => {
     return null;
   }
 };
-
-// ...
-
 {Array.isArray(restaurantsAdmin) && restaurantsAdmin.length > 0 ? (
   restaurantsAdmin.map((user, index) => (
     <tr key={user.id}>
@@ -189,26 +186,9 @@ const renderActivationButton = (userId, userStatus) => {
                   <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <div className="membery">
-                    <center> <img src="assets/img/profile.png" className="img-fluid imagex" alt="" /></center>
-                    <h5 className='names'>H.Cedrick</h5>
-
-                    <p className='titlex'>
-                      Sed autem laudantium dolores.
-                    </p>
-
-
-                  </div>
-                  <center>
+               
                     <Menu2 />
-                    <center>
-                      <div className="d-flex justify-content-center ">
-                        <a href="register" className="btn-get-started" style={{ backgroundColor: '#b6b5b5', borderRadius: '6px', fontFamily: 'monospace', textDecoration: 'none', padding: '0.2cm', width: '4cm', marginTop: '3cm', color: 'black' }}>
-                          logout
-                        </a>
-                      </div>
-                    </center>
-                  </center>
+                
                 </Offcanvas.Body>
               </Offcanvas>
             </div>
@@ -216,19 +196,11 @@ const renderActivationButton = (userId, userStatus) => {
             {/* Main Content */}
             <main className="col-md-12 ms-sm-auto col-lg-12 px-md-4 allcontent">
               <div className="row">
-                {/* Sidebar Trigger Button (visible on small devices) */}
-
-
-                {/* Sidebar (visible on medium devices and larger when Offcanvas is closed) */}
                 {!show && (
                   <div className="col-md-2 d-none d-md-block d-md-blockx">
-                    {/* Your menu items go here */}
                     <Menu />
                   </div>
                 )}
-
-                {/* Your dashboard content goes here */}
-
                 <div className={`col-md-10 ${show ? 'content-shift' : ''}`}>
 
                   <section id="team" className="team">
@@ -243,81 +215,7 @@ const renderActivationButton = (userId, userStatus) => {
                         </div>
 
 
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-                              <h1 style={{ fontSize: '40px' }}>23</h1>
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0.1cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0.1cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
+                        <Statistics />
 
 
                       </div>
@@ -364,13 +262,13 @@ const renderActivationButton = (userId, userStatus) => {
             {Array.isArray(restaurantsAdmin) && restaurantsAdmin.length > 0 ? (
               <table className="table table-hover">
                 <thead>
-                  <tr style={{ backgroundColor: 'red', marginTop: '0cm' }}>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">modify</th>
+                  <tr style={{ backgroundColor: '', marginTop: '0cm' }}>
+                    <th scope="col" style={{  backgroundColor: 'whitesmoke', marginTop: '0cm',borderTopLeftRadius:'10px' }} >#</th>
+                    <th scope="col" style={{  backgroundColor: 'whitesmoke', marginTop: '0cm' }}>Names</th>
+                    <th scope="col" style={{  backgroundColor: 'whitesmoke', marginTop: '0cm' }}>Email</th>
+                    <th scope="col" style={{  backgroundColor: 'whitesmoke', marginTop: '0cm' }}>Phone</th>
+                    <th scope="col" style={{  backgroundColor: 'whitesmoke', marginTop: '0cm' }}>status</th>
+                    <th scope="col" style={{  backgroundColor: 'whitesmoke', marginTop: '0cm',borderTopRightRadius:'10px'  }}>modify</th>
                   </tr>
                 </thead>
                 <tbody>

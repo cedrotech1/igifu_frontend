@@ -25,12 +25,10 @@ const LandingPage = () => {
       const parsedUser = JSON.parse(user);
       const ID = parsedUser.id;
       setMy(ID);
-      console.log(myid)
-
+  
       const fetchCards = async () => {
         try {
-          console.log(myid)
-          const response = await fetch(`http://localhost:5000/api/v1/card/mycard/${myid}`, {
+          const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/card/mycard/${ID}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -39,7 +37,6 @@ const LandingPage = () => {
           if (data.success) {
             const allCards = data.Cardses;
             setCards(allCards);
-            console.log(allCards)
           } else {
             console.error('Failed to fetch Cards:', data.message);
           }
@@ -51,48 +48,18 @@ const LandingPage = () => {
         }
       };
       fetchCards();
-
-
-      
     } else {
       console.error('User information not found in local storage');
     }
-  }, [Cards]);
+  }, [token]); 
+  
 
-
-  // useEffect(() => {
-  //   const fetchCards = async () => {
-  //     try {
-  //       console.log(myid)
-  //       const response = await fetch(`http://localhost:5000/api/v1/card/mycard/${myid}`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       const data = await response.json();
-  //       if (data.success) {
-  //         const allCards = data.Cardses;
-  //         setCards(allCards);
-  //         console.log(allCards)
-  //       } else {
-  //         console.error('Failed to fetch Cards:', data.message);
-  //       }
-
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error('Error fetching Cards:', error);
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchCards();
-  // }, [token]);
 
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/v1/restaurent/', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/restaurent/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -121,12 +88,12 @@ const LandingPage = () => {
   const handleView = (id) => {
     // Handle view logic
     // Example: Navigate to a page with the restaurant ID
-    // navigate(`../one/${id}`);
+    navigate(`../history/${id}`);
   };
   return (
     <>
       <Menu />
-      <section id="hero" className="hero">
+      <section id="hero" className="hero"  style={{marginTop:'2cm'}}>
         <div className="container position-relative">
           <div className="row gy-5" data-aos="fade-in">
             <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
@@ -146,7 +113,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-<section id="team" className="team">
+<section id="team" className="team" style={{marginTop:'0cm'}}>
   <div className="container" data-aos="fade-up">
     <div className="row gy-4">
       {loading ? (

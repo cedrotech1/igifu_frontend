@@ -5,10 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { BiEnvelope, BiPhone, BiMap } from 'react-icons/bi';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import Statistics from "../../components/statistics-component";
-import Menu from "../../components/employeeeMenu";
-import Menu2 from "../../components/employeeMenu2";
+import Menu from "../../components/MenuDeskTop";
+import Menu2 from "../../components/MenuMobile";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -51,11 +49,11 @@ const Dashboard = () => {
           });
 
           if(formData.userid!==1){
-            console.log(times)
-            console.log(formData)
+            // console.log(times)
+            // console.log(formData)
 
                    try {
-                   const response = await fetch('http://localhost:5000/api/v1/card/add', {
+                   const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/card/add`, {
                      method: 'POST',
                      headers: {
                        'Content-Type': 'application/json',
@@ -107,15 +105,18 @@ const Dashboard = () => {
     useEffect(() => {
     const fetchCards = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/v1/categories/', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/categories/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         const data = await response.json();
         if (data.success) {
+
           setCards(data.data);
-          // console.log(data.data);
+          console.log(data);
+
+    
         } else {
           console.error('Failed to fetch Cards:', data.message);
         }
@@ -137,7 +138,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/v1/categories/', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/categories/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -167,7 +168,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchCustomersAdmin = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/v1/users', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/users`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -175,7 +176,7 @@ const Dashboard = () => {
         const data = await response.json();
         if (data.success) {
           setCustomersAdmin(data.users);
-          console.log(data.users);
+          // console.log(data.users);
         } else {
           console.error('Failed to fetch CustomersAdmin:', data.message);
         }
@@ -187,18 +188,15 @@ const Dashboard = () => {
     };
     fetchCustomersAdmin();
   }, []);
-
   const [value1, setFilterValue1] = useState('');
-
   const handleFilter1 = (e) => {
     setFilterValue1(e.target.value);
     setError(null);
   };
-
   useEffect(() => {
     const fetchCustomersAdmin = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/v1/users', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/users`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -228,8 +226,7 @@ const Dashboard = () => {
     fetchCustomersAdmin();
   }, [value1]);
   const handleView = (id) => {
-    // Handle view logic
-    // Example: Navigate to a page with the restaurant ID
+
     navigate(`../emplyoyee_meal_card/${id}`);
     // console.log(id)
   };
@@ -246,31 +243,10 @@ const Dashboard = () => {
                   <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <div className="membery">
-                    <center> <img src="assets/img/profile.png" className="img-fluid imagex" alt="" /></center>
-                    <h5 className='names'>H.Cedrick</h5>
-
-                    <p className='titlex'>
-                      Sed autem laudantium dolores.
-                    </p>
-
-
-                  </div>
-                  <center>
-                    <Menu2 />
-                    <center>
-                      <div className="d-flex justify-content-center ">
-                        <a href="register" className="btn-get-started" style={{ backgroundColor: '#b6b5b5', borderRadius: '6px', fontFamily: 'monospace', textDecoration: 'none', padding: '0.2cm', width: '4cm', marginTop: '3cm', color: 'black' }}>
-                          logout
-                        </a>
-                      </div>
-                    </center>
-                  </center>
+                <Menu2 />
                 </Offcanvas.Body>
               </Offcanvas>
             </div>
-
-            {/* Main Content */}
             <main className="col-md-12 ms-sm-auto col-lg-12 px-md-4 allcontent">
               <div className="row">
                 {/* Sidebar Trigger Button (visible on small devices) */}
@@ -323,7 +299,7 @@ const Dashboard = () => {
                             <div className="col-xl-6 col-md-6" style={{ padding: '0.4cm' }}>
 
                               <input
-                                placeholder='Filter here...'
+                                placeholder='Filter customers...'
                                 variant=""
                                 onChange={handleFilter1}
 
@@ -347,7 +323,7 @@ const Dashboard = () => {
 
                             </div>
                             <div className="col-xl-6 col-md-6" style={{ padding: '0.4cm' }}>
-                              <h6 style={{ textAlign: 'center', paddingBottom: '0.5cm', color: 'gray' }}>LIST OF CARD CUSTOMERS </h6>
+                              {/* <h6 style={{ textAlign: 'center', paddingBottom: '0.5cm', color: 'gray' }}>LIST OF CARD CUSTOMERS </h6> */}
 
                             </div>
 
@@ -360,14 +336,15 @@ const Dashboard = () => {
                                 CustomersAdmin.map((Customer) => (
                                   <div  onClick={() => handleView(Customer.id)} key={Customer.id} className="col-xl-6 col-md-6 " data-aos="fade-up" data-aos-delay={100 * Customer.id} style={{ padding: '' }}>
                                     <div className="member col-xl-12">
-                                      <img src='assets/img/images (3).jpeg' className="img-fluid" alt="" style={{ height: 'auto', padding: '0px', width: '100%', borderRadius: '7px' }} />
+                                      {/* <img src='assets/img/images (3).jpeg' className="img-fluid" alt="" style={{ height: 'auto', padding: '0px', width: '100%', borderRadius: '7px' }} /> */}
+                                      {Customer.image && Customer.image !== 'null' ? (
+                                            <img src={Customer.image} className="img-fluid" alt="" style={{ borderRadius: '10px', marginBottom: '0.5cm',width:'11cm' }} />
+
+                                        ) : (
+                                            <img src="/assets/img/images (3).png" className="img-fluid" alt="Default Image" style={{ borderRadius: '10px', marginBottom: '0.5cm',width:'9cm' }}  />
+
+                                        )}
                                       <h4 style={{ textAlign: 'center' }}>{Customer.firstname} &nbsp;{Customer.lastname}</h4>
-
-                                      <p style={{ textAlign: 'justify', fontFamily: 'cursive', textAlign: 'center' }}>
-                                        {Customer.status}
-                                      </p>
-
-                                      {/* {Customer.role} */}
                                       <p style={{ textAlign: 'center', fontStyle: 'italic', fontPalette: '13px', backgroundColor: 'whitesmoke', padding: '0.4cm', marginTop: '20px', borderRadius: '6px' }}>
                                         <BiMap className="" style={{ color: 'black' }} />&nbsp;&nbsp;{Customer.address} <br />
                                         <BiEnvelope className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} />&nbsp;&nbsp;{Customer.email} <br />
@@ -441,7 +418,7 @@ const Dashboard = () => {
                             <div className="col-xl-6 col-md-6" style={{ padding: '0.4cm' }}>
 
                               <input
-                                placeholder='Filter here...'
+                                placeholder='Filter category...'
                                 variant=""
 
                                 onChange={handleFilter}
@@ -467,7 +444,7 @@ const Dashboard = () => {
 
                             </div>
                             <div className="col-xl-6 col-md-6" style={{ padding: '0.4cm' }}>
-                              <h6 style={{ textAlign: 'center', paddingBottom: '0.5cm', color: 'gray' }}>LIST OF CARD CATEGORIES </h6>
+                              {/* <h6 style={{ textAlign: 'center', paddingBottom: '0.5cm', color: 'gray' }}>LIST OF CARD CATEGORIES </h6> */}
 
                             </div>
 
@@ -521,12 +498,3 @@ const Dashboard = () => {
 export default Dashboard;
 
 
-{/* <p>
-<strong>User:</strong> {card.cardUser.firstname} {card.cardUser.lastname}
-</p>
-<p>
-<strong>Restaurant:</strong> {card.categories.resto.name}
-</p>
-<p>
-<strong>Duration:</strong> {card.times} days
-</p> */}

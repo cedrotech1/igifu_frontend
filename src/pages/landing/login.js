@@ -21,7 +21,7 @@ const LandingPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/v1/auth/login', {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,11 +87,12 @@ const LandingPage = () => {
 
               <form onSubmit={handleSubmit} className="myform">
                 <h4 >Login form</h4>
+               
 
                 <div className="form-group mt-3">
                   <span>Email</span>
 
-                  <input type="text" className="form-control" name="email" id="email" placeholder="cedrick@gmail.com" onChange={handleChange} />
+                  <input type="text" className="form-control" name="email" id="email" placeholder="cedrick@gmail.com" onChange={handleChange} style={{outline: 'none'}} />
                 </div>
                 {/* <br/> */}
 

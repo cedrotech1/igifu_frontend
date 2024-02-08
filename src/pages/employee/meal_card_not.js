@@ -6,9 +6,8 @@ import { BiEnvelope, BiPhone, BiMap } from 'react-icons/bi';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Statistics from "../../components/statistics-component";
-import Menu from "../../components/employeeeMenu";
-import Menu2 from "../../components/employeeMenu2";
+import Menu from "../../components/MenuDeskTop";
+import Menu2 from "../../components/MenuMobile";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -36,12 +35,12 @@ const Dashboard = () => {
   });
 
 
-  // `http://localhost:5000/api/v1/categories/one/${id}`,
+  // ``${process.env.REACT_APP_BASE_URL}/api/v1/categories/one/${id}`,
 
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/v1/card/one/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/card/one/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -90,14 +89,10 @@ const Dashboard = () => {
     e.preventDefault();
     let x = '0';
     if (use) {
-      // setFormData({ use: 1 })
-
-
-
       try {
         console.log(use)
 
-        const response = await fetch(`http://localhost:5000/api/v1/card/use/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/card/use/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -157,7 +152,7 @@ const Dashboard = () => {
   };
   return (
     <body className='mybody'>
-      <div className="dashboardx">
+      <div className="dashboardx" style={{ backgroundColor: 'whitesmoke' }}>
         <div className="container-fluid">
           <div className="row">
             {/* Sidebar (visible on medium devices and larger) */}
@@ -167,26 +162,7 @@ const Dashboard = () => {
                   <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <div className="membery">
-                    <center> <img src="/assets/img/profile.png" className="img-fluid imagex" alt="" style={{ height: '3cm' }} /></center>
-                    <h5 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: '', fontWeight: 'bold' }}>H.Cedrick</h5>
-
-                    <p style={{ textAlign: 'center', fontFamily: 'monospace', marginBottom: '1cm' }}>
-                      Sed autem laudantium dolores.
-                    </p>
-
-
-                  </div>
-                  <center>
-                    <Menu2 />
-                    <center>
-                      <div className="d-flex justify-content-center ">
-                        <a href="login" className="btn-get-started" style={{ backgroundColor: '#b6b5b5', borderRadius: '6px', fontFamily: 'monospace', textDecoration: 'none', padding: '0.2cm', width: '4cm', marginTop: '3cm', color: 'black' }}>
-                          logout
-                        </a>
-                      </div>
-                    </center>
-                  </center>
+                <Menu2 />
                 </Offcanvas.Body>
               </Offcanvas>
             </div>
@@ -221,94 +197,28 @@ const Dashboard = () => {
                         </div>
 
 
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-                              <h1 style={{ fontSize: '40px' }}>23</h1>
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0.1cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0.1cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-
-
-
-
+                   
                       </div>
                     </div>
                   </section>
 
 
-                  <section id="hero" className="hero">
+                  <section id="hero" className="hero" style={{ backgroundColor: 'whitesmoke', padding: '0cm', marginTop: '-0.7cm' }}>
                     <div className="container position-relative">
                       <div className="row gy-5" data-aos="fade-in">
-                        <div className="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start" style={{ backgroundColor: '', padding: '0.7cm', marginTop: '-0.5cm' }}>
+                        <div className="col-lg-5 order-1 order-lg-1 flex-column justify-content-center text-center text-lg-start" style={{ backgroundColor: '', padding: '0.7cm', marginTop: '0.5cm', borderRadius: '10px' }}>
 
 
-                          <div className="col-xl-11 col-md-12 d-flex" data-aos="fade-up" data-aos-delay="200" style={{ backgroundColor: 'whitesmoke', padding: '0.5cm', borderRadius: '10px' }} >
-                            {Cards.cardUser && (<div className="member">
-                              <img src="/assets/img/pic.png" className="img-fluid" alt="" style={{ borderRadius: '10px' }} />
+                          <div className="col-xl-12 col-md-12" data-aos="fade-up" data-aos-delay="200" style={{ backgroundColor: 'white', paddingTop: '0.5cm', padding: '0.3cm', borderRadius: '20px' }} >
+                        {Cards.cardUser && (<div className="member">
+                              <br />
+                              {Cards.cardUser.image && Cards.cardUser.image !== 'null' ? (
+                                            <img src={Cards.cardUser.image} className="img-fluid" alt="" style={{ borderRadius: '10px', marginBottom: '0.5cm',width:'11cm' }} />
 
+                                        ) : (
+                                            <img src="/assets/img/images (3).png" className="img-fluid" alt="Default Image" style={{ borderRadius: '10px', marginBottom: '0.5cm',width:'9cm' }}  />
+
+                                        )}
                               <h4 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: 'uppercase', marginTop: '0.3cm' }}>
                                 {Cards.cardUser.firstname} &nbsp;{Cards.cardUser.lastname}
                               </h4>
@@ -321,7 +231,7 @@ const Dashboard = () => {
                                 <i className="bi bi-envelope flex-shrink-0" style={{ backgroundColor: '' }}><BiMap className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} /></i>
 
 
-                                &nbsp; <span>huye innovation hub !
+                                &nbsp; <span>{Cards.cardUser.address}
                                 </span><br />
                                 <i className="bi bi-envelope flex-shrink-0" style={{ backgroundColor: '' }}><BiPhone className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} /></i>
 
@@ -336,17 +246,50 @@ const Dashboard = () => {
                           </div>
                         </div>
                         <div className="col-lg-7 order-1 order-lg-2">
-                          <div className="col-xl-12" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
+                          <div className="col-xl-12" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0cm', marginTop: '0.5cm' }}>
                             <div className="row member">
                               <div className=" col-xl-12  col-md-12" style={{ margin: '0cm' }}>
                                 <div className="">
-                                  {imageSources.map((src, index) => (
-                                    <img key={index} src={src} className="img-fluid" alt="" style={{ height: '1.5cm', marginRight: '5px', marginBottom: '5px' }} />
+                                  {/* {imageSources.map((src, index) => (
+                                    <img key={index} src={src} className="img-fluid" alt="" style={{ height: '1cm', marginRight: '5px', marginBottom: '5px' }} />
                                   ))}
 
                                   {imageSources2.map((src, index) => (
-                                    <img key={index} src={src} className="img-fluid" alt="" style={{ height: '1.2cm', marginRight: '5px', marginBottom: '5px' }} />
-                                  ))}
+                                    <img key={index} src={src} className="img-fluid" alt="" style={{ height: '0.8cm', marginRight: '2px', marginBottom: '5px' }} />
+                                  ))} */}
+
+<section id="team" className="team" style={{marginTop:'-2cm'}}>
+                    <div className="container" data-aos="fade-up">
+                      <div className="row">
+
+                                  <div className="col-xl-12" data-aos="fade-up" data-aos-delay="100">
+                                    <div className="row member">
+
+                                      <div className=" col-xl-6 col-md-6" style={{ backgroundColor: 'white',padding:'0.5cm' }}>
+
+                                          <h1 style={{ fontSize: '73px', fontFamily: 'cursive', textAlign: 'center',color:'green'}}>
+                                            <i style={{color:'red'}}>{x}</i> 
+                                      /60 </h1>
+                                      </div>
+                                      <div className=" col-xl-6  col-md-6" style={{ margin: '0cm' ,padding:'0.2cm'}}>
+                                        <h5 style={{ textAlign: 'center' }}>Card standing</h5>
+
+                                        <p style={{ textAlign: 'center', fontFamily: 'sans-serif'  }}>
+                                          she/he has been used  {Cards.times}/60 means its remains  {Math.floor(Cards.times/60*100)}%,
+                                        </p>
+                                        <div className="d-flex justify-content-center justify-content-lg-start">
+
+
+                                        </div>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  </div>
+                    </div>
+                  </section>
 
 
                                   <form onSubmit={handleSubmit} className="myform">

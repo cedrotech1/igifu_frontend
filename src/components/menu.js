@@ -1,13 +1,20 @@
-
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Offcanvas, Button, Nav } from 'react-bootstrap';
-import '../css/main2.css'
-
-
+import '../css/main2.css';
 
 const LandingPage = () => {
   const [show, setShow] = useState(false);
+
+  const sidebarStyles = {
+    // backgroundColor: '#b6b5b5',
+    borderRadius: '6px',
+    fontFamily:'cursive',
+    fontSize:'20px',
+    textDecoration: 'none',
+    color: 'black',
+  };
+
   return (
     <>
       <div className={`col-md-3 d-none d-md-block ${show ? 'sidebar-shift' : ''}`}>
@@ -18,35 +25,21 @@ const LandingPage = () => {
           <Offcanvas.Body>
             <div className="membery">
               <center>
-                <img src="assets/img/profile.png" className="img-fluid imagex" alt="" style={{ height: '3cm' }} />
+                <img src="/assets/img/images (3).png" className="img-fluid imagex" alt="" style={{ height: '3cm' }} />
               </center>
-              <h5 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: '', fontWeight: 'bold' }}>H.Cedrick</h5>
-              <p style={{ textAlign: 'center', fontFamily: 'monospace', marginBottom: '1cm' }}>
-                Sed autem laudantium dolores.
+              <h5 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: '', fontWeight: 'bold' }}>Visitor</h5>
+              <p style={{ textAlign: 'center', fontFamily: 'monospace',padding:'0.2cm' }}>
+               create account to became ! our customer and access all features of this system !!
               </p>
             </div>
             <center>
-            <Nav className="flex-column">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="contact">contact</Nav.Link>
-                <Nav.Link href="about">About</Nav.Link>
-                {/* <Nav.Link href="login">Logout</Nav.Link> */}
+              <Nav className="flex-column">
+                <Nav.Link style={sidebarStyles}>Home</Nav.Link>
+                <Nav.Link style={sidebarStyles}>contact</Nav.Link>
+                <Nav.Link style={sidebarStyles}>About</Nav.Link>
               </Nav>
               <div className="d-flex justify-content-center">
-                <a
-                  href="./login"
-                  className="btn-get-started"
-                  style={{
-                    backgroundColor: '#b6b5b5',
-                    borderRadius: '6px',
-                    fontFamily: 'monospace',
-                    textDecoration: 'none',
-                    padding: '0.2cm',
-                    width: '4cm',
-                    marginTop: '3cm',
-                    color: 'black',
-                  }}
-                >
+                <a href="./login" className="btn-get-started" style={sidebarStyles}>
                   Login
                 </a>
               </div>
@@ -54,12 +47,20 @@ const LandingPage = () => {
           </Offcanvas.Body>
         </Offcanvas>
       </div>
-
-      {/* <div className="col-6 d-md-none">
-      
-      </div> */}
-
-      <header id="header" className="header d-flex align-items-center">
+      <header
+        id="header"
+        className="header d-flex align-items-center"
+        style={{
+          marginBottom:'0cm',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          zIndex: 1000,
+          backgroundColor: '#ffffff', // Set the desired background color
+          // boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', 
+        }}
+      >
         <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
           <a href="/" className="logo d-flex align-items-center">
             <img src="assets/img/LG.png" className="img-fluid mylogo" alt="" data-aos="zoom-out" data-aos-delay="100" />
@@ -67,25 +68,17 @@ const LandingPage = () => {
           <nav id="navbar" className="navbar">
             <ul>
               <li>
-                <a href="/" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>Home</a>
-              </li>
-  
-
-              <li>
-                <a href="contact" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>Contact</a>
+                <a href="/" style={sidebarStyles}>Home</a>
               </li>
               <li>
-                <a href="about" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>About</a>
+                <a href="contact" style={sidebarStyles}>Contact</a>
               </li>
               <li>
-                <a href="login" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>Login</a>
-              </li>
-              {/* <li>
-                <a href="confirm" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>Confirm</a>
+                <a href="about" style={sidebarStyles}>About</a>
               </li>
               <li>
-                <a href="login" style={{ color: 'black', fontFamily: 'monospace', fontSize: '20px' }}>logout</a>
-              </li> */}
+                <a href="login" style={sidebarStyles}>Login</a>
+              </li>
             </ul>
           </nav>
 

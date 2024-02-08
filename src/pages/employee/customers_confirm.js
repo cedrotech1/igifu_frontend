@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Offcanvas, Button } from 'react-bootstrap';
 import '../../css/main2.css';
-import Menu from "../../components/employeeeMenu";
-import Menu2 from "../../components/employeeMenu2";
+import Menu from "../../components/MenuDeskTop";
+import Menu2 from "../../components/MenuMobile";
 const Dashboard = () => {
   const [show, setShow] = useState(false);
 
@@ -29,26 +29,7 @@ const Dashboard = () => {
                   <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <div className="membery">
-                    <center> <img src="assets/img/profile.png" className="img-fluid imagex" alt="" style={{ height: '3cm' }} /></center>
-                    <h5 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: '', fontWeight: 'bold' }}>H.Cedrick</h5>
-
-                    <p style={{ textAlign: 'center', fontFamily: 'monospace', marginBottom: '1cm' }}>
-                      Sed autem laudantium dolores.
-                    </p>
-
-
-                  </div>
-                  <center>
-                    <Menu2 />
-                    <center>
-                      <div className="d-flex justify-content-center ">
-                        <a href="register" className="btn-get-started" style={{ backgroundColor: '#b6b5b5', borderRadius: '6px', fontFamily: 'monospace', textDecoration: 'none', padding: '0.2cm', width: '4cm', marginTop: '3cm', color: 'black' }}>
-                          logout
-                        </a>
-                      </div>
-                    </center>
-                  </center>
+                <Menu2 />
                 </Offcanvas.Body>
               </Offcanvas>
             </div>

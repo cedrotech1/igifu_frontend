@@ -30,7 +30,7 @@ const LandingPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/v1/users/signup', {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/users/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const LandingPage = () => {
     <>
       <Menu />
 
-      <section id="hero" className="hero" style={{ marginTop: '-0.4cm' }}>
+      <section id="hero" className="hero" style={{ marginTop: '1.5cm' }}>
         <div className="container position-relative">
           <div className="row gy-5" data-aos="fade-in">
             <div className="col-lg-1 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start"></div>

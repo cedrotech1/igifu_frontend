@@ -1,27 +1,115 @@
-import React, { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Offcanvas, Button, Nav } from 'react-bootstrap';
 import '../../css/main2.css';
-
-import Menu from "../../components/adminMenu";
-import Menu2 from "../../components/adminMenuRes";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEdit, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import Menu from "../../components/MenuDeskTop";
+import Statistics from "../../components/statistics-component";
+import Menu2 from "../../components/MenuMobile";
+import { BiEnvelope, BiPhone, BiMap } from 'react-icons/bi'; 
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
-
   const [showModal, setShowModal] = useState(false);
+  const handleToggleModal = () => { setShowModal(!showModal);  };
+  const handleCloseModal = () => {setShowModal(false);  };
+  const [Cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/restaurent/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-  const handleToggleModal = () => {
-    setShowModal(!showModal);
-  };
+        const data = await response.json();
 
-  const handleCloseModal = () => {
-    setShowModal(false);
+        if (data.success) {
+          setCards(data.data);
+          console.log(data.data)
+        } else {
+          console.error('Failed to fetch restaurants:', data.message);
+        }
+
+        // Set loading to false after fetching data
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching restaurants:', error);
+        // Set loading to false in case of an error
+        setLoading(false);
+      }
+    };
+
+    fetchRestaurants();
+  }, []);
+
+  console.log(Cards)
+  const handleView = (CardId) => {
+    navigate(`../resto_cate_view/${CardId}`);
+     };
+
+
+
+
+
+  const [value, setFilterValue] = useState('');
+  const handleFilter = (e) => {
+    setFilterValue(e.target.value);
+    // setError(null);
   };
+  
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/restaurent/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        const data = await response.json();
+  
+        if (data.success) {
+          // Ensure that 'Cards' is an array before filtering
+          const CardsArray = Array.isArray(data.data) ? data.data : [];
+  
+          const filteredCards = CardsArray.filter(Card =>
+            (Card.address.toLowerCase().includes(value.toLowerCase()) ||
+            Card.name.toLowerCase().includes(value.toLowerCase()) ||
+            Card.description.toLowerCase().includes(value.toLowerCase()) ||
+            Card.status.toLowerCase().includes(value.toLowerCase())) 
+          );
+  
+          setCards(filteredCards);
+        } else {
+          console.error('Failed to fetch Cards:', data.message);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching Cards:', error);
+        setLoading(false);
+      }
+    };
+  
+    fetchCards();
+  }, [value]);
+
+
+
 
   return (
-    <body className='mybody'>
-      <div className="dashboard">
+    <body className='mybody' >
+      <div className="dashboard" style={{backgroundColor:'whitesmoke'}}>
         <div className="container-fluid">
           <div className="row">
             {/* Sidebar (visible on medium devices and larger) */}
@@ -31,26 +119,9 @@ const Dashboard = () => {
                   <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <div className="membery">
-                    <center> <img src="assets/img/profile.png" className="img-fluid imagex" alt="" style={{ height: '3cm' }} /></center>
-                    <h5 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: '', fontWeight: 'bold' }}>H.Cedrick</h5>
-
-                    <p style={{ textAlign: 'center', fontFamily: 'monospace', marginBottom: '1cm' }}>
-                      Sed autem laudantium dolores.
-                    </p>
-
-
-                  </div>
-                  <center>
+                
                     <Menu2 />
-                    <center>
-                      <div className="d-flex justify-content-center ">
-                        <a href="register" className="btn-get-started" style={{ backgroundColor: '#b6b5b5', borderRadius: '6px', fontFamily: 'monospace', textDecoration: 'none', padding: '0.2cm', width: '4cm', marginTop: '3cm', color: 'black' }}>
-                          logout
-                        </a>
-                      </div>
-                    </center>
-                  </center>
+               
                 </Offcanvas.Body>
               </Offcanvas>
             </div>
@@ -58,23 +129,15 @@ const Dashboard = () => {
             {/* Main Content */}
             <main className="col-md-12 ms-sm-auto col-lg-12 px-md-4 allcontent">
               <div className="row">
-                {/* Sidebar Trigger Button (visible on small devices) */}
-
-
-                {/* Sidebar (visible on medium devices and larger when Offcanvas is closed) */}
                 {!show && (
                   <div className="col-md-2 d-none d-md-block d-md-blockx">
-                    {/* Your menu items go here */}
                     <Menu />
                   </div>
                 )}
-
-                {/* Your dashboard content goes here */}
-
                 <div className={`col-md-10 ${show ? 'content-shift' : ''}`}>
 
-                  <section id="team" className="team">
-                    <div className="container" data-aos="fade-up">
+                <section id="team" className="team">
+                    <div className="container" data-aos="fade-up" style={{marginLeft:'-0.2cm'}}>
                       <div className="row">
 
                         {/* menu bars */}
@@ -85,252 +148,87 @@ const Dashboard = () => {
                         </div>
 
 
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-                              <h1 style={{ fontSize: '40px' }}>23</h1>
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0.1cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0.1cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
+             <Statistics/>
 
 
                       </div>
                     </div>
                   </section>
 
-                  {/* Button to open the modal */}
-                  <div style={{ textAlign: 'right' }}>
-                    <Button
-                      variant=""
-                      onClick={handleToggleModal}
-                      style={{
-                        backgroundColor: 'white',
-                        borderRadius: '6px',
-                        fontFamily: 'monospace',
-                        textDecoration: 'none',
-                        padding: '0.2cm',
-                        width: '4cm',
-                        marginTop: '-2cm',
-                        color: 'black',
-                        height: 'auto',
-                      }}
-                    >
-                      Add users
-                    </Button>
+                  <div className="row" style={{backgroundColor:'whitesmoke'}}>
+
+
+                    <div className="col-xl-3 col-md-3" style={{ padding: '0.4cm' }}>
+
+                      <input
+                        placeholder='Filter here...'
+                        variant=""
+                        onChange={handleFilter}
+                        style={{
+                          backgroundColor: 'white',
+                          borderRadius: '6px',
+                          fontFamily: 'monospace',
+                          textDecoration: 'none',
+                          padding: '0.2cm',
+                          width: '4cm',
+                          marginTop: '0cm',
+                          marginBottom: '1cm',
+                          // color: 'black',
+                          height: 'auto',
+                          width: '6cm',
+                          border: '0px',
+                          outline: 'none',
+
+                        }}
+                      />
+
+
+
+                    </div>
+                    <div className="col-xl-5 col-md-5" style={{ padding: '0.4cm' }}>
+                    <h4 style={{ textAlign: 'center', paddingBottom: '0.5cm', color: 'gray' }}>LIST OF CARD RESTAURENTS </h4>
+
+                    </div>
+                 
                   </div>
 
                   {/* Modal component */}
-                  <Modal show={showModal} onHide={handleCloseModal}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Add Employees</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <form action="" method="post" role="form" className="myform">
-                        {/* <h4 style={{fontFamily:'Abel',backgroundColor:'',border:'0px',height:'auto',borderTopLeftRadius:'0.5cm',borderTopRightRadius:'0.5cm',color:'black',textAlign:'',padding:''}}>register as customer form</h4> */}
+                  {/* Modal component */}
+              
 
-
-                        <div className="row" style={{ paddingTop: '0cm' }}>
-                          <div className="col-md-6 form-group">
-                            <span>First name</span>
-                            <input type="text" name="name" className="form-control" id="name" placeholder="Cedrick" required style={{ marginTop: '0.1cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} />
-                          </div>
-                          <div className="col-md-6 form-group mt-3 mt-md-0">
-                            <span>Last Name</span>
-                            <input type="email" className="form-control" name="email" id="email" placeholder="Hakuzimana" required style={{ marginTop: '0.1cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} />
-                          </div>
-                        </div>
-                        <div className="form-group mt-3">
-                          <span>Email</span>
-
-                          <input style={{ marginTop: '0.3cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} type="text" className="form-control" name="email" id="email" placeholder="cedrick@gmail.com" required />
-                        </div>
-
-                        <div className="form-group mt-3">
-                          <span>Phone</span>
-
-                          <input style={{ marginTop: '0.3cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} type="text" className="form-control" name="email" id="email" placeholder="0784366616" required />
-                        </div>
-
-                        <div className="form-group mt-3">
-                          <span>Password</span>
-
-                          <input style={{ marginTop: '0.3cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} type="text" className="form-control" name="email" id="email" placeholder="*************" required />
-                        </div>
-                        {/* <br/> */}
-
-                        <div className="row" style={{ paddingTop: '0.3cm' }}>
-                          <div className="col-md-6 form-group">
-                            <span>Gender</span>
-                            <input type="text" name="name" className="form-control" id="name" placeholder="male" required style={{ marginTop: '0.3cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} />
-                          </div>
-                          <div className="col-md-6 form-group mt-3 mt-md-0">
-                            <span>Address</span>
-                            <input type="email" className="form-control" name="email" id="email" placeholder="huye/ngoma" required style={{ marginTop: '0.3cm', backgroundColor: 'whitesmoke', border: '0px', height: '1.2cm' }} />
-                          </div>
-                        </div>
-
-
-                        <div className="text-center"><button type="submit" className="form-control" style={{ marginTop: '1.6cm', backgroundColor: '#4c56ad', color: 'white', borderRadius: ' 10px' }}>create account</button></div>
-                      </form>
-                    </Modal.Body>
-
-                  </Modal>
-
-                  <section id="team" className="team" style={{ marginTop: '-2cm' }}>
-                    <div className="container" data-aos="fade-up">
-                      <div className="row">
-                        <div className="" data-aos="fade-up" data-aos-delay="100">
-                          <div className="row member">
-
-                            <div className=" col-xl-12 col-md-12" style={{ padding: '0.4cm' }}>
-                              <h3 style={{ textAlign: 'justify' }}>LISTE OF RESTAURERS</h3>
-                              {/* table-borderless */}
-
-
-
-                              <p style={{ textAlign: 'justify', marginTop: '0cm' }}>
-                                <table class="table table-hover ">
-                                  <thead >
-                                    <tr style={{ backgroundColor: 'red', marginTop: '0cm' }}>
-                                      <th scope="col">#</th>
-                                      <th scope="col">First</th>
-                                      <th scope="col">Last</th>
-                                      <th scope="col">Handle</th>
-                                      <th scope="col">Last</th>
-                                      <th scope="col">Handle</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <th scope="row">1</th>
-                                      <td>Mark</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">2</th>
-                                      <td>Jacob</td>
-                                      <td>Thornton</td>
-                                      <td>@fat</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">3</th>
-                                      <td colspan="2">Larry the Bird</td>
-                                      <td>@twitter</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-
-                                    <tr>
-                                      <th scope="row">3</th>
-                                      <td colspan="2">Larry the Bird</td>
-                                      <td>@twitter</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-
-                                    <tr>
-                                      <th scope="row">3</th>
-                                      <td colspan="2">Larry the Bird</td>
-                                      <td>@twitter</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-                                  </tbody>
-                                </table>  </p>
-
-
-
-                            </div>
-                          </div>
-
-
-                        </div>
-
-
-
-                      </div>
-                    </div>
-                  </section>
-
-
-
-
-
-
-
+                  <section id="team" className="team" style={{ backgroundColor: 'whitesmoke',marginTop:'-2cm' }}>
+  <div className="container" data-aos="fade-up">
+    <div className="row gy-4">
+      {Cards.length > 0 ? (
+            Cards.map((restaurant) => (
+              <div onClick={() => handleView(restaurant.id)} key={restaurant.id} className="col-xl-4 col-md-6 " data-aos="fade-up" data-aos-delay={100 * restaurant.id} style={{ padding: '' }}>
+                <div className="member col-xl-12">
+                {restaurant.image!==null ? (
+                  <img src={restaurant.image} className="img-fluid" alt="" style={{ borderRadius: '10px', marginBottom: '0.5cm',width:'9CM' }} />
+                ) : (
+                  <img src='/assets/img/rest.jpg' className="img-fluid" alt="Default Image" style={{ borderRadius: '10px', marginBottom: '0.5cm', width: '100%' }}/>
+                )}
+                  <h4 style={{ textAlign: 'justify' }}>{restaurant.name}</h4>
+    
+                  <p style={{ textAlign: 'justify' }}>
+                    {restaurant.description}
+                    <p style={{ textAlign: 'center', fontStyle: 'italic', fontPalette: '13px', backgroundColor: 'whitesmoke',border:'1px solid lightgray', padding: '0.4cm', marginTop: '20px', borderRadius: '6px' }}>
+                      <BiMap className="" style={{ color: 'black' }} />&nbsp;&nbsp;{restaurant.address} <br />
+                      <BiEnvelope className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} />&nbsp;&nbsp;{restaurant.email} <br />
+                      <BiPhone />&nbsp;&nbsp;{restaurant.phone}
+                    </p>
+                  </p>
+                </div>
+              </div>
+            ))
+      ) : (
+        <div className="col-12 text-center">
+          <h4 style={{ textAlign: 'center', paddingBottom: '0.5cm', color: 'gray',border:'4PX SOLID lightgray',padding:'1cm' }}>{value ? 'NO MATCHING DATA FOUND' : 'NO DATA AVAILABLE'}</h4>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
 
 
 
@@ -341,7 +239,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
+      <ToastContainer />
     </body>
   );
 };

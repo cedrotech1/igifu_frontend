@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Offcanvas, Button, Nav } from 'react-bootstrap';
 import '../../css/main2.css';
 
-import Menu from "../../components/restoAdminMenu";
-import Menu2 from "../../components/restoAdminMenu2";
+import Menu from "../../components/MenuDeskTop";
+import Menu2 from "../../components/MenuMobile";
 
 const Dashboard = () => {
   const [show, setShow] = useState(false);

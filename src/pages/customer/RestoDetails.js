@@ -3,19 +3,8 @@ import '../../css/main2.css';
 import Menu from "../../components/customerM";
 import Footer from "../../components/footer";
 import { useNavigate, useParams } from 'react-router-dom';
-// const categories = [
-//   {
-//     title: 'Vip category',
-//     image: '/assets/img/images (4).jpeg',
-//     description: 'Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet. Eum quas beatae cumque eum quaerat. Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet. Eum quas beatae cumque eum quaerat. Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet. Eum quas beatae cumque eum quaerat. Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet. Eum quas beatae cumque eum quaerat. Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet. Eum quas beatae cumque eum quaerat. Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet. Eum quas beatae cumque eum quaerat.',
-//     price: '9000 Rwf/ month',
-//     videoLink: 'https://www.youtube.com/watch?v=LXb3EKWsInQ',
-//   },
-//   // Add more category objects as needed
-// ];
-
 const LandingPage = () => {
-  const { id } = useParams(); // Use useParams to get the 'id' from the URL
+  const { id } = useParams(); 
 
 
 
@@ -28,7 +17,7 @@ const LandingPage = () => {
       try {
         const token = localStorage.getItem('token');
 
-        const response = await fetch(`http://localhost:5000/api/v1/categories/one/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/categories/one/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,10 +28,6 @@ const LandingPage = () => {
 
         if (data.success) {
           const cat = data.data
-
-
-          // Assuming you want to filter categories based on the restaurant's id
-          // const filteredCategories = restaurant.restaurantCategories.filter(category => category.restaurent === restaurant.id);
           setRestaurantCategories([cat]);
           console.log(cat);
         } else {
@@ -62,44 +47,62 @@ const LandingPage = () => {
     fetchRestaurants();
   }, []);
 
-  const handleView = (id) => {
-    // Handle view logic
-    // Example: Navigate to a page with the restaurant ID
-    // navigate(`../one/${id}`);
-  };
   return (
     <>
       <Menu />
+      {Array.isArray(RestaurantCategories) && RestaurantCategories.length > 0 ? (
 
-      <section id="team" className="team">
+      <section id="team" className="team" style={{marginTop:'1cm'}}>
         <div className="container" data-aos="fade-up">
           {RestaurantCategories.map((category, index) => (
             <div key={index} data-aos="fade-up" data-aos-delay={100 * index}>
               <div className="row member">
                 <div className="col-xl-6 col-md-6 d-flex">
-                  <img src='/assets/img/images (4).jpeg' className="img-fluid" alt="" />
+                {category.image!==null && category.image!=='null' ? (
+                                        <img src={category.image} className="img-fluid" alt="" style={{ borderRadius: '10px', marginBottom: '0.5cm',width:'9cm'  }}  />                                  
+                                        ) : (
+                                        <img src='/assets/img/images (4).jpeg' className="img-fluid" alt="Default Image" style={{ borderRadius: '10px', marginBottom: '0.5cm',width:'100%' }} />
+                                        )}
                 </div>
-                <div className="col-xl-6 col-md-6" style={{ padding: '0.4cm' }}>
-                  <h3 style={{ textAlign: 'justify' }}>{category.title}</h3>
-                  <p style={{ textAlign: 'justify', marginTop: '1cm' }}>{category.description}</p>
-                  <p style={{ fontFamily: 'monospace', marginTop: '-0.5cm', textAlign: 'right', fontSize: '20px' }}>
+                <div className="col-xl-4 col-md-5" style={{ padding: '0.4cm' }}>
+                  <h3 style={{ textAlign: 'justify' }}>{category.name}</h3>
+                  <p style={{ textAlign: 'justify', marginTop: '' }}>{category.description}</p>
+                  <p style={{ fontFamily: 'monospace', marginTop: '-0.5cm', textAlign: '', fontSize: '20px' }}>
                     Price: {category.price}
                   </p>
-                  <div className="d-flex justify-content-center justify-content-lg-start">
-                    <a
-                      href={category.videoLink}
-                      className="glightbox btn-watch-video d-flex align-items-center"
-                      style={{ backgroundColor: 'whitesmoke', borderRadius: '6px', width: '4cm', textAlign: 'center', padding: '0.2cm', marginTop: '0.5cm', textDecoration: 'none' }}
-                    >
-                      &nbsp; &nbsp; &nbsp; &nbsp; Watch Video
-                    </a>
-                  </div>
+            
                 </div>
               </div>
             </div>
           ))}
         </div>
       </section>
+          ) : (
+            <section id="hero" className="hero" style={{ height: '90vh' }}>
+            <div className="container position-relative">
+              <div className="row gy-5" data-aos="fade-in">
+                <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start" style={{ marginTop: '4cm', fontFamily: 'monospace' }}>
+                  <h2 className='welcame' style={{ fontSize: '45px', marginBottom: '0cm', marginTop: '-5cm', fontFamily: 'monospace' }}>
+                    404
+                  </h2>
+                  <p style={{ marginBottom: '1cm', marginTop: '0cm', fontStyle: 'bold', fontFamily: 'monospace',textAlign:'justfy' }}>
+                there is no registered category  yet ! <br/>
+                 sorry !!
+                  </p>
+      
+      
+              
+      
+      
+      
+                </div>
+                <div className="col-lg-6 order-1 order-lg-2" style={{ marginTop: 'cm', fontFamily: 'monospace',color:'white' }}>
+                  <img src="/assets/img/Oops! 404 Error with a broken robot-amico.svg" className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100" />
+                </div>
+              </div>
+            </div>
+          </section>
+                        )}
 
       {/* footer */}
       <Footer />

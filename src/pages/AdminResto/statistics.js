@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Offcanvas, Button, Nav } from 'react-bootstrap';
 import '../../css/main2.css';
+import Statistics from "../../components/statistics";
 
-import Menu from "../../components/restoAdminMenu";
-import Menu2 from "../../components/restoAdminMenu2";
+import Menu from "../../components/MenuDeskTop";
+import Menu2 from "../../components/MenuMobile";
 const Dashboard = () => {
   const [show, setShow] = useState(false);
-
   const [showModal, setShowModal] = useState(false);
-
   const handleToggleModal = () => {
     setShowModal(!showModal);
   };
-
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -30,26 +28,9 @@ const Dashboard = () => {
                   <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <div className="membery">
-                    <center> <img src="assets/img/profile.png" className="img-fluid imagex" alt="" style={{ height: '3cm' }} /></center>
-                    <h5 style={{ textAlign: 'center', fontFamily: 'monospace', textTransform: '', fontWeight: 'bold' }}>H.Cedrick</h5>
-
-                    <p style={{ textAlign: 'center', fontFamily: 'monospace', marginBottom: '1cm' }}>
-                      Sed autem laudantium dolores.
-                    </p>
-
-
-                  </div>
-                  <center>
+             
                     <Menu2 />
-                    <center>
-                      <div className="d-flex justify-content-center ">
-                        <a href="register" className="btn-get-started" style={{ backgroundColor: '#b6b5b5', borderRadius: '6px', fontFamily: 'monospace', textDecoration: 'none', padding: '0.2cm', width: '4cm', marginTop: '3cm', color: 'black' }}>
-                          logout
-                        </a>
-                      </div>
-                    </center>
-                  </center>
+                 
                 </Offcanvas.Body>
               </Offcanvas>
             </div>
@@ -83,299 +64,13 @@ const Dashboard = () => {
                           </Button>
                         </div>
 
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-                              <h1 style={{ fontSize: '40px' }}>23</h1>
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0.1cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0.1cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-
-
-
-
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-
-
-
-
-
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
-
-
-
-
-
-
-
-                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
-                            <div className=" col-xl-4 col-md-6 d-flex" style={{ backgroundColor: 'whitesmoke' }}>
-
-
-                            </div>
-                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
-                              <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
-                                Sed autem laudantium dolores.
-
-                              </p>
-                              <div className="d-flex justify-content-center justify-content-lg-start">
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-                        </div>
+                        <Statistics />
 
 
 
                       </div>
                     </div>
                   </section>
-
-
-
-
-
-
-
-
-
-
-
                 </div>
               </div>
             </main>

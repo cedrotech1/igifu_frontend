@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Offcanvas, Button, Nav } from 'react-bootstrap';
 import '../../css/main2.css';
 import { BiEnvelope, BiPhone, BiMap } from 'react-icons/bi'; // Importing icons from the 'react-icons' library
-import Menu from "../../components/employeeeMenu";
-import Menu2 from "../../components/employeeMenu2";
+import Menu from "../../components/MenuDeskTop";
+import Menu2 from "../../components/MenuMobile";
 const Dashboard = () => {
   const [show, setShow] = useState(false);
 

@@ -5,7 +5,6 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [statistics, setStatistics] = useState(null); // Initialize with null
   const token = localStorage.getItem('token');
-  const [rest, setRest] = useState(true);
 
   useEffect(() => {
     const fetchStatistics = async () => {
@@ -37,8 +36,6 @@ const App = () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
-      setRest(storedUser.restaurants)
-      // console.log(storedUser.restaurents)
     }
   }, []);
   if (loading) {
@@ -48,12 +45,9 @@ const App = () => {
   if (!user) {
     return <div>User not found</div>;
   }
-
   const { role } = user;
-console.log(user.restaurents)
   return (
     <div>
-      {/* Other components */}
       {role === 'superadmin' && (
         <>
           {statistics && (
@@ -72,7 +66,7 @@ console.log(user.restaurents)
                   <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
                     <h5 style={{ textAlign: 'justify' }}>users</h5>
 
-                    <p style={{ textAlign: 'justify', fontFamily: 'cursive' }}>
+                    <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
                       number of users in our system
 
                     </p>
@@ -97,7 +91,7 @@ console.log(user.restaurents)
                   <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
                     <h5 style={{ textAlign: 'justify' }}>restaurents</h5>
 
-                    <p style={{ textAlign: 'justify', fontFamily: 'cursive' }}>
+                    <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
                       number of users in our system
 
                     </p>
@@ -110,7 +104,57 @@ console.log(user.restaurents)
                 </div> 
                 
 
+            
+
+
+
+
                 <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
+                          <div className="row member">
+                            <div className=" col-xl-4 col-md-6" style={{ backgroundColor: 'whitesmoke' }}>
+                            <h1 style={{ fontSize: '73px',fontFamily:'cursive' }}>
+                              {statistics.resto.actives}
+                              </h1>
+                            </div>
+                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
+                              <h5 style={{ textAlign: 'justify' }}>Active Employees</h5>
+                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
+                                we have only
+                                &nbsp;{statistics.resto.actives} 
+                                 &nbsp; active 
+                              </p>
+                              <div className="d-flex justify-content-center justify-content-lg-start">
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+
+
+                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
+                          <div className="row member">
+                            <div className=" col-xl-4 col-md-6" style={{ backgroundColor: 'whitesmoke' }}>
+                            <h1 style={{ fontSize: '73px',fontFamily:'cursive' }}>
+                              {statistics.resto.disactives}
+                              </h1>
+                            </div>
+                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
+                              <h5 style={{ textAlign: 'justify' }}>Disactiveted Employees</h5>
+                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
+                                we have only
+                                &nbsp;{statistics.resto.disactives} 
+                                 &nbsp; disactive
+                              </p>
+                              <div className="d-flex justify-content-center justify-content-lg-start">
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+
+                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
                 <div className="row member">
 
                   <div className=" col-xl-4 col-md-6" style={{ backgroundColor: 'whitesmoke' }}>
@@ -123,7 +167,7 @@ console.log(user.restaurents)
                   <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
                     <h5 style={{ textAlign: 'justify' }}>.......</h5>
 
-                    <p style={{ textAlign: 'justify', fontFamily: 'cursive' }}>
+                    <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
                       number of .... in our system
 
                     </p>
@@ -134,6 +178,8 @@ console.log(user.restaurents)
                 </div>
 
                 </div> 
+
+
                 
                 
                 
@@ -148,7 +194,7 @@ console.log(user.restaurents)
 
       {role === 'restaurentadmin' && (
         <>
-          {statistics && user.restaurents !== null && (
+          {statistics && (
             <div className="row">
               {/* Rest of your restaurentadmin JSX */}
 
@@ -156,33 +202,26 @@ console.log(user.restaurents)
 
               <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
                 <div className="row member">
-
                   <div className=" col-xl-4 col-md-6" style={{ backgroundColor: 'whitesmoke' }}>
-
                     <h1 style={{ fontSize: '73px', fontFamily: 'cursive', textAlign: 'center' }}>
                       {statistics.resto.employees}
                     </h1>
                   </div>
                   <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
                     <h5 style={{ textAlign: 'justify' }}>Employees</h5>
-
-                    <p style={{ textAlign: 'justify', fontFamily: 'cursive' }}>
+                    <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
                       number of imployees in our restourent
-
                     </p>
                     <div className="d-flex justify-content-center justify-content-lg-start">
                     </div>
                   </div>
-
                 </div>
-
               </div>
 
+
               <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
-                          <div className="row member">
-
+                   <div className="row member">
                             <div className=" col-xl-4 col-md-6" style={{ backgroundColor: 'whitesmoke' }}>
-
                             <h1 style={{ fontSize: '73px',fontFamily:'cursive' }}>
                               {statistics.resto.categories}
                               </h1>
@@ -190,18 +229,15 @@ console.log(user.restaurents)
                             <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
                               <h5 style={{ textAlign: 'justify' }}>Categories</h5>
 
-                              <p style={{ textAlign: 'justify', fontFamily: 'cursive' }}>
+                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
                                 we have only
                                 &nbsp;{statistics.resto.categories} 
                                  &nbsp; in our restourent
-
                               </p>
                               <div className="d-flex justify-content-center justify-content-lg-start">
                               </div>
                             </div>
-
                           </div>
-
                         </div>
 
 
@@ -209,42 +245,69 @@ console.log(user.restaurents)
 
                         <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
                           <div className="row member">
-
                             <div className=" col-xl-4 col-md-6" style={{ backgroundColor: 'whitesmoke' }}>
-
                             <h1 style={{ fontSize: '73px',fontFamily:'cursive' }}>
                               {statistics.resto.cards}
                               </h1>
                             </div>
                             <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
                               <h5 style={{ textAlign: 'justify' }}>cards</h5>
-
-                              <p style={{ textAlign: 'justify', fontFamily: 'cursive' }}>
+                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
                                 we have only
                                 &nbsp;{statistics.resto.cards} 
-                                 &nbsp; cards in our restaurant
-
+                                 &nbsp; cards
                               </p>
                               <div className="d-flex justify-content-center justify-content-lg-start">
                               </div>
                             </div>
+                          </div>
 
+                        </div>
+
+
+                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
+                          <div className="row member">
+                            <div className=" col-xl-4 col-md-6" style={{ backgroundColor: 'whitesmoke' }}>
+                            <h1 style={{ fontSize: '73px',fontFamily:'cursive' }}>
+                              {statistics.resto.actives}
+                              </h1>
+                            </div>
+                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
+                              <h5 style={{ textAlign: 'justify' }}>Active Employees</h5>
+                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
+                                we have only
+                                &nbsp;{statistics.resto.actives} 
+                                 &nbsp; active 
+                              </p>
+                              <div className="d-flex justify-content-center justify-content-lg-start">
+                              </div>
+                            </div>
                           </div>
 
                         </div>
 
 
 
+                        <div className="col-xl-4" data-aos="fade-up" data-aos-delay="100" style={{ paddingLeft: '0.7cm', marginTop: '0.5cm' }}>
+                          <div className="row member">
+                            <div className=" col-xl-4 col-md-6" style={{ backgroundColor: 'whitesmoke' }}>
+                            <h1 style={{ fontSize: '73px',fontFamily:'cursive' }}>
+                              {statistics.resto.disactives}
+                              </h1>
+                            </div>
+                            <div className=" col-xl-7  col-md-6" style={{ margin: '0cm' }}>
+                              <h5 style={{ textAlign: 'justify' }}>Disactiveted Employees</h5>
+                              <p style={{ textAlign: 'justify', fontFamily: 'sans-serif' }}>
+                                we have only
+                                &nbsp;{statistics.resto.disactives} 
+                                 &nbsp; disactive
+                              </p>
+                              <div className="d-flex justify-content-center justify-content-lg-start">
+                              </div>
+                            </div>
+                          </div>
 
-
-
-
-
-
-
-
-
-
+                        </div>
 
 
 
